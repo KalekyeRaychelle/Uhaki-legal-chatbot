@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500&display=swap");
+
+.landingHeader{
+    display:flex;
+    justify-content:space-between;
+    border-bottom: 0.2px gray solid;
+}
+.rightSide{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding: 10px 20px;
+}
+.logo-box{
+    width: 30px;
+    height: 30px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color: #6C5CE7;
+    border-radius: 5px;
+}
+.logo-box svg{
+    color:white;
+}
+.rightSide, span{
+    font-family: 'Libre Baskerville', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #6C5CE7;
+}
+.leftSide{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding: 10px 20px; 
+}
+.leftSide span{
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    color: #888780;
+    cursor: pointer;
+    font-weight: normal;
+}
+.leftSide button{
+    padding: 8px 16px;
+    background-color: #6C5CE7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    display: inline-block;
+    letter-spacing: .10rem;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    isolation:isolate;}
+.leftSide button::after {
+        content: '';
+        position: absolute;
+        inset:0;
+        background-color:#6C5CE7;
+        z-index: -2;
+    }
+
+.leftSide button::before {
+        content: '';
+        position: absolute;
+        inset:0;
+        width: 0;
+        height: 100%;
+        background-color: #5341d6;
+        transition: width .3s ease;
+        z-index: -1;
+    }
+.leftSide button:hover::before {
+    width: 100%;
+}
+    
