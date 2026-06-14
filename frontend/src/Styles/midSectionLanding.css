@@ -1,9 +1,7 @@
 .midSection{
-
-    height:auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    
+    height:auto;
 }
 .midLeft{
     display:flex;
@@ -57,7 +55,7 @@
     
 
 }
-.convoSide button{
+.convoSide button:not(.text-link){
     background-color: #6C5CE7;
     color: white;
     border: none;
@@ -68,13 +66,14 @@
     margin-bottom:10px;
     font-family: 'DM Sans', sans-serif;
 }
-.convoSide a{
+.convoSide .text-link{
+    background: transparent;
+    border: 0;
+    padding: 0;
     font-size: 13px;
     color: #534AB7;
-    text-decoration: none;
     font-family: 'DM Sans', sans-serif;
     cursor: pointer;
-
 }
 .floatBoats{
     display: flex;

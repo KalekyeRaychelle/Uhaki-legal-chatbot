@@ -2,5 +2,5 @@
    background: #F7F6FF; 
    border-radius: 16px; 
    border: 0.5px solid #CECBF6; 
-   overflow: hidden; 
+   scroll-behavior: smooth;
 }

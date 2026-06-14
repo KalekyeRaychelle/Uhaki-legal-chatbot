@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500&display=swap");
+
+.stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 0.5px solid #CECBF6; background: white; }
+.stat { padding: 18px 24px; text-align: center; border-right: 0.5px solid #EEEDFE; }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: 'Libre Baskerville', serif; font-size: 22px; font-weight: 700; color: #6C5CE7; }
+.stat-label { font-family: 'DM Sans', sans-serif; font-size: 11px; color: #888780; margin-top: 2px; }
+
+.how-section { padding: 36px 40px; background: white; border-top: 0.5px solid #EEEDFE; }
+.how-section h2 { font-family: 'Libre Baskerville', serif; font-size: 18px; font-weight: 700; color: #2C2C2A; margin-bottom: 20px; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.step { background: #F7F6FF; border-radius: 12px; border: 0.5px solid #EEEDFE; padding: 16px; }
+.step-num { width: 28px; height: 28px; background: #6C5CE7; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 500; margin-bottom: 10px; font-family: 'DM Sans', sans-serif; }
+.step h3 { font-family: 'Libre Baskerville', serif; font-size: 13px; font-weight: 700; color: #3C3489; margin-bottom: 4px; }
+.step p { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #5F5E5A; line-height: 1.5; }
+
+.footer { padding: 14px 28px; border-top: 0.5px solid #EEEDFE; background: white; display: flex; align-items: center; justify-content: space-between; font-family: 'DM Sans', sans-serif; }
+.footer span { font-size: 11px; color: #B4B2A9; }

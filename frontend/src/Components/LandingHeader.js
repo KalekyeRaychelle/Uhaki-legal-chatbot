@@ -2,7 +2,7 @@ import React from 'react'
 import { IconScale } from '@tabler/icons-react';
 import '../Styles/LandingHeader.css';
 import { useNavigate } from 'react-router-dom';
-const LandingHeader = () => {
+const LandingHeader = ({ onActsCoveredClick }) => {
       const navigate = useNavigate();
       const handleChatClick = () => {
 
@@ -15,7 +15,7 @@ const LandingHeader = () => {
             <span>Uhaki</span>
         </div>
         <div className='leftSide'>
-            <span>Acts covered</span>
+            <button type="button" className="nav-link" onClick={onActsCoveredClick}>Acts covered</button>
             <button onClick={handleChatClick}>Start Chatting</button>
         </div>
       

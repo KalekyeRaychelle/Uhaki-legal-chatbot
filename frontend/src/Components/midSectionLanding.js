@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "../Styles/midSectionLanding.css";
 import Outline from "../Assets/Outline.png"
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ const MidSectionLanding = () => {
   const handleChatClick = () => {
     navigate('/ChatPage');
   };
+
+  useEffect(() => {
   const conversation = [
       { role: 'user', text: 'Can my landlord evict me without notice?' },
       { role: 'bot', text: 'No. Written notice is required — at least one month for monthly tenancies.', sources: ['Landlord & Tenant Act · §4'] },
@@ -15,9 +17,17 @@ const MidSectionLanding = () => {
     ];
 
     let step = 0;
+    const timers = [];
+
+    function schedule(callback, delay) {
+      const timer = setTimeout(callback, delay);
+      timers.push(timer);
+      return timer;
+    }
 
     function addUserMsg(text) {
       const msgs = document.getElementById('chatMsgs');
+      if (!msgs) return;
       const div = document.createElement('div');
       div.className = 'cmsg user';
       div.innerHTML = `<div class="cbubble">${text}</div>`;
@@ -27,6 +37,7 @@ const MidSectionLanding = () => {
 
     function addTyping() {
       const msgs = document.getElementById('chatMsgs');
+      if (!msgs) return;
       const div = document.createElement('div');
       div.className = 'cmsg bot'; div.id = 'typing';
       div.innerHTML = `<div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
@@ -38,6 +49,7 @@ const MidSectionLanding = () => {
 
     function addBotMsg(text, sources) {
       const msgs = document.getElementById('chatMsgs');
+      if (!msgs) return;
       const div = document.createElement('div');
       div.className = 'cmsg bot';
       const pills = sources.map(s => `<span class="spill"><i class="ti ti-file-text" style="font-size:10px"></i>${s}</span>`).join('');
@@ -48,39 +60,53 @@ const MidSectionLanding = () => {
 
     function typeInput(text, cb) {
       const el = document.getElementById('inputPreview');
+      if (!el) return;
       el.style.color = '#3C3489';
       let i = 0; el.textContent = '';
       const iv = setInterval(() => {
         el.textContent += text[i]; i++;
-        if (i >= text.length) { clearInterval(iv); setTimeout(cb, 400); }
+        if (i >= text.length) { clearInterval(iv); schedule(cb, 400); }
       }, 50);
+      timers.push(iv);
     }
 
     function clearInput() {
       const el = document.getElementById('inputPreview');
+      if (!el) return;
       el.style.color = '#B4B2A9';
       el.textContent = 'Type your question...';
     }
 
     function runStep() {
       if (step >= conversation.length) {
-        setTimeout(() => {
-          document.getElementById('chatMsgs').innerHTML = `<div class="cmsg bot"><div class="cbubble">Hello! Ask me anything about your rights under Kenyan law.</div></div>`;
+        schedule(() => {
+          const msgs = document.getElementById('chatMsgs');
+          if (!msgs) return;
+          msgs.innerHTML = `<div class="cmsg bot"><div class="cbubble">Hello! Ask me anything about your rights under Kenyan law.</div></div>`;
           step = 0;
-          setTimeout(runStep, 2000);
+          schedule(runStep, 2000);
         }, 3000);
         return;
       }
       const msg = conversation[step];
       if (msg.role === 'user') {
-        typeInput(msg.text, () => { addUserMsg(msg.text); clearInput(); step++; setTimeout(runStep, 500); });
+        typeInput(msg.text, () => { addUserMsg(msg.text); clearInput(); step++; schedule(runStep, 500); });
       } else {
         addTyping();
-        setTimeout(() => { removeTyping(); addBotMsg(msg.text, msg.sources); step++; setTimeout(runStep, 2000); }, 1200);
+        schedule(() => { removeTyping(); addBotMsg(msg.text, msg.sources); step++; schedule(runStep, 2000); }, 1200);
       }
     }
 
-    setTimeout(runStep, 1500);
+    schedule(runStep, 1500);
+
+    return () => {
+      timers.forEach((timer) => {
+        clearTimeout(timer);
+        clearInterval(timer);
+      });
+    };
+  }, []);
+
   return (
    <section className='midSection'>
         <div className="midLeft">
@@ -89,7 +115,7 @@ const MidSectionLanding = () => {
             <p>Ask questions about Kenyan law in plain language. Uhaki pulls answers directly from 20 acts and the Constitution; with sources.</p>
             <div className='convoSide'>
               <button onClick={handleChatClick}> Start a conversation</button>
-              <a>See what I can answer</a>
+              <button type="button" className="text-link">See what I can answer</button>
             </div>
             <div className="floatBoats">
               <span>Constitutional rights</span>
