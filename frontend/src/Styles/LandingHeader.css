@@ -3,7 +3,7 @@
 .landingHeader{
     display:flex;
     justify-content:space-between;
-    border-bottom: 0.2px gray solid;
+    background-color: white;
 }
 .rightSide{
     display:flex;
