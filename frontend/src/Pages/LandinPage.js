@@ -1,44 +1,26 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Outline from "../Assets/Outline.png";
+import React, { useRef } from "react";
 import "../Styles/LandinPage.css";
-
+import LandingHeader from "../Components/LandingHeader";
+import MidSectionLanding from "../Components/MidSectionLanding";
+import LandingBottom from "../Components/LandingBottom";
 const LandinPage = () => {
-  const navigate = useNavigate();
+  const bottomRef = useRef(null);
 
-  const goToChat = () => {
-    navigate("/ChatPage");
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   return (
-    <main className="lp">
-      <section className="lp-left">
-        <div className="lp-mapWrap">
-          <img src={Outline} alt="Kenya outline" className="lp-map" />
-          <span className="lp-brand">Uhaki</span>
-          <div className="lp-glow" aria-hidden="true" />
-        </div>
-      </section>
-
-      <section className="lp-right">
-        <h1 className="lp-title">Legal Assistant System</h1>
-        <p className="lp-sub">
-          Uhaki is designed to make access to legal information simple and
-          accessible. It provides general legal guidance and helps users
-          navigate laws with ease.
-        </p>
-
-        <button className="lp-cta" onClick={goToChat}>
-          <span>Start Chat</span>
-          <span className="lp-ctaArrow" aria-hidden="true">›</span>
-        </button>
-      </section>
-      <section className="lp-copyRightS">
-          <p className="lp-copyRightP">
-          © 2025 Uhaki Legal Assistant System. All rights reserved.
-        </p>
-      </section>
-    </main>
+    <div className="page">
+      <LandingHeader onActsCoveredClick={scrollToBottom}/>
+      <MidSectionLanding/>
+      <LandingBottom ref={bottomRef}/>
+     </div>
+    
+   
   );
 };
 
