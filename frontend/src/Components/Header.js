@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import '../Styles/Header.css';
 import { IconScale } from '@tabler/icons-react';
 import { IconRefresh } from '@tabler/icons-react';
@@ -20,7 +19,7 @@ const Header = ({ onClearChat }) => {
       </div>
       <div className='chatRight'>
         <a href="/">Home</a>
-        <a>Acts Covered</a>
+        <a href='/acts'>Acts Covered</a>
         <button onClick={onClearChat}><IconRefresh size={16}/> Clear Chat</button>
       </div>
     </div>

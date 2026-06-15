@@ -17,7 +17,11 @@ const ChatPage = ({ registerClear }) => {
       setMessages(JSON.parse(saved));
     } else {
       setMessages([
-        { id: generateId(), sender: 'uhaki', text: 'Hello, I am Uhaki, a legal assistant. How may I help you?' }
+        {
+          id: generateId(),
+          sender: 'uhaki',
+          text: "Hello! I'm Uhaki, your Kenyan legal assistant. Ask me anything about your rights, obligations, or how specific laws apply to your situation."
+        }
       ]);
     }
   }, []);
@@ -35,7 +39,11 @@ const ChatPage = ({ registerClear }) => {
         if (confirmClear) {
           localStorage.removeItem("uhaki_chat_history");
           setMessages([
-            { id: generateId(), sender: 'uhaki', text: 'Hello, I�?Tm Uhaki, a legal assistant. How may I help you?' }
+            {
+              id: generateId(),
+              sender: 'uhaki',
+              text: "Hello! I'm Uhaki, your Kenyan legal assistant. Ask me anything about your rights, obligations, or how specific laws apply to your situation."
+            }
           ]);
         }
       };
@@ -72,7 +80,7 @@ const ChatPage = ({ registerClear }) => {
 
       const data = await response.json();
       const results = Array.isArray(data.top_results) ? data.top_results : [];
-      const answer = data.answer || "I'm sorry, I couldn�?Tt find a clear answer from the available acts.";
+      const answer = data.answer || "I am sorry, I could not find a clear answer from the available acts.";
       const formattedSources = results.slice(0, 3).map((r) => ({
         act: r.act || 'N/A',
         section: r.section || 'N/A',
@@ -105,7 +113,7 @@ const ChatPage = ({ registerClear }) => {
   return (
     <div className="ChatPage">
       <main className="ChatScroll">
-        <MessageList messages={messages} isTyping={isTyping} />
+        <MessageList messages={messages} isTyping={isTyping} onPromptClick={handleSend} />
       </main>
 
       <div className="BottomBar" ref={bottomRef}>

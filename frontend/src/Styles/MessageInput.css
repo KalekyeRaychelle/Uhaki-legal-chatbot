@@ -1,50 +1,75 @@
 .composer {
   display: grid;
-  grid-template-columns: 1fr 44px;
-  align-items: flex-end;  
-  gap: 10px;
-  padding: 10px 15px;
-  border: 1px solid #e5e7eb;
-  border-radius: 24px;
+  grid-template-columns: 1fr 48px;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px 12px 24px;
+  border: none;
+  border-radius: 999px;
   background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
 }
 
 .composer-input {
   border: none;
-  resize: none; 
+  resize: none;
   outline: none;
-  max-height: 150px; /* limit size */
-  overflow-y: hidden; /* ✅ hide scroll by default */
-  padding: 8px;
+  max-height: 150px;
+  overflow-y: hidden;
+  padding: 10px 0;
   background: transparent;
+  color: #050505;
   font-size: 16px;
   font-family: inherit;
   line-height: 1.4;
-  scrollbar-width: thin; /* for Firefox */
-  scrollbar-color: #ccc transparent;
+  scrollbar-width: thin;
+  scrollbar-color: #c7c3ff transparent;
 }
 
-/* ✅ show scrollbar only when text overflows */
+.composer-input::placeholder {
+  color: #050505;
+  opacity: 0.5;
+}
+
 .composer-input.scrollable {
   overflow-y: auto;
 }
 
 .send-btn {
-  width: 44px;
-  height: 36px;
-  border-radius: 999px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   border: none;
   cursor: pointer;
   color: #fff;
-  font-size: 16px;
-  background: #7c3aed;
+  background: #6956e8;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .send-btn:hover {
-  background: #6d28d9;
+  background: #5746dc;
+  transform: translateY(-1px);
+}
+
+.send-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 720px) {
+  .composer {
+    grid-template-columns: 1fr 44px;
+    padding: 10px 12px 10px 18px;
+  }
+
+  .composer-input {
+    font-size: 16px;
+  }
+
+  .send-btn {
+    width: 44px;
+    height: 44px;
+  }
 }
