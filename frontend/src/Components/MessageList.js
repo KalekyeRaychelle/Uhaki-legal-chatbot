@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import "../Styles/MessageList.css";
 import robotLogo from "../Assets/robotlogo.webp";
 
-const MessageList = ({ messages = [], isTyping = false }) => {
+const MessageList = ({ messages = [], isTyping = false, onPromptClick }) => {
   const listRef = useRef(null);
   const [sourcesModal, setSourcesModal] = useState(null);
 
@@ -23,12 +23,15 @@ const MessageList = ({ messages = [], isTyping = false }) => {
 
   return (
     <div ref={listRef} className="message-list-container">
-      {messages.map((m) => {
+      {messages.map((m, index) => {
         const hasSources = Array.isArray(m.sources) && m.sources.length > 0;
+        const isFirstUhakiMessage = m.sender === "uhaki" && index === 0;
         return (
           <div key={m.id} className={`message-row ${m.sender}`}>
             {m.sender === "uhaki" && (
-              <img src={robotLogo} alt="Uhaki" className="avatar" />
+              <div className="avatar" aria-hidden="true">
+                <img src={robotLogo} alt="Uhaki" />
+              </div>
             )}
 
             <div className="message-content">
@@ -37,8 +40,10 @@ const MessageList = ({ messages = [], isTyping = false }) => {
                   <ReactMarkdown
                     skipHtml
                     components={{
-                      a: ({ node, ...props }) => (
-                        <a {...props} target="_blank" rel="noreferrer" />
+                      a: ({ node, children, ...props }) => (
+                        <a {...props} target="_blank" rel="noreferrer">
+                          {children}
+                        </a>
                       )
                     }}
                   >
@@ -48,7 +53,23 @@ const MessageList = ({ messages = [], isTyping = false }) => {
                 {m.time && <div className="bubble-meta">{m.time}</div>}
               </div>
 
-              {m.sender === "uhaki" && (
+              {m.sender === "uhaki" && hasSources && (
+                <div className="source-chip-row">
+                  {m.sources.slice(0, 3).map((src, idx) => (
+                    <button
+                      type="button"
+                      className="source-chip"
+                      key={`${m.id}-source-${idx}`}
+                      onClick={() => openSourcesModal(m)}
+                    >
+                      {src.act || "Source"} {src.section ? `- ${src.section}` : ""}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+             
+              {m.sender === "uhaki" && !hasSources && !isFirstUhakiMessage && (
                 <div className="bubble-actions">
                   <button
                     type="button"
@@ -63,15 +84,6 @@ const MessageList = ({ messages = [], isTyping = false }) => {
                   >
                     Copy
                   </button>
-                    {hasSources && (
-                      <button
-                        type="button"
-                        className="sources-link"
-                        onClick={() => openSourcesModal(m)}
-                      >
-                      Sources used
-                    </button>
-                  )}
                 </div>
               )}
             </div>
@@ -81,7 +93,7 @@ const MessageList = ({ messages = [], isTyping = false }) => {
 
       {isTyping && (
         <div className="message-row uhaki">
-          <img src={robotLogo} alt="Uhaki" className="avatar" />
+          <div className="avatar" aria-hidden="true" />
           <div className="bubble typing-bubble">
             <div className="typing">
               <span className="dot" />

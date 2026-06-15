@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { IconArrowUp } from "@tabler/icons-react";
 import "../Styles/MessageInput.css";
 
 const MessageInput = ({ onSend }) => {
@@ -11,7 +12,7 @@ const MessageInput = ({ onSend }) => {
     onSend(text);
     setValue("");
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // reset height after sending
+      textareaRef.current.style.height = "auto";
     }
   };
 
@@ -22,12 +23,11 @@ const MessageInput = ({ onSend }) => {
     }
   };
 
-  // Auto resize height on input change
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // reset height first
+      textareaRef.current.style.height = "auto";
       const scrollHeight = textareaRef.current.scrollHeight;
-      const maxHeight = 150; // matches CSS
+      const maxHeight = 150;
       textareaRef.current.style.height =
         scrollHeight > maxHeight ? `${maxHeight}px` : `${scrollHeight}px`;
     }
@@ -38,14 +38,14 @@ const MessageInput = ({ onSend }) => {
       <textarea
         ref={textareaRef}
         className="composer-input"
-        placeholder="Type your message..."
+        placeholder="Ask about your rights..."
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
         rows={1}
       />
-      <button className="send-btn" type="button" onClick={handleSend}>
-        ➤
+      <button className="send-btn" type="button" onClick={handleSend} aria-label="Send message">
+        <IconArrowUp size={24} stroke={2.4} />
       </button>
     </div>
   );
