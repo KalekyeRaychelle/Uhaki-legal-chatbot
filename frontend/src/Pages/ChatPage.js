@@ -12,6 +12,11 @@ const ChatPage = ({ registerClear }) => {
   const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
 
   useEffect(() => {
+    document.body.classList.add('chat-page-active');
+    return () => document.body.classList.remove('chat-page-active');
+  }, []);
+
+  useEffect(() => {
     const saved = localStorage.getItem("uhaki_chat_history");
     if (saved) {
       setMessages(JSON.parse(saved));

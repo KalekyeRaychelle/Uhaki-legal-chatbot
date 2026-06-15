@@ -53,7 +53,22 @@ const MessageList = ({ messages = [], isTyping = false, onPromptClick }) => {
                 {m.time && <div className="bubble-meta">{m.time}</div>}
               </div>
 
-            
+              {m.sender === "uhaki" && hasSources && (
+                <div className="source-chip-row">
+                  {m.sources.slice(0, 3).map((src, idx) => (
+                    <button
+                      type="button"
+                      className="source-chip"
+                      key={`${m.id}-source-${idx}`}
+                      onClick={() => openSourcesModal(m)}
+                    >
+                      {src.act || "Source"} {src.section ? `- ${src.section}` : ""}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+             
               {m.sender === "uhaki" && !hasSources && !isFirstUhakiMessage && (
                 <div className="bubble-actions">
                   <button

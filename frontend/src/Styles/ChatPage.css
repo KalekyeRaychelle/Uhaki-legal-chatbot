@@ -2,10 +2,7 @@
   --bb-h: 130px;
 }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
+body.chat-page-active {
   overflow: hidden;
 }
 
