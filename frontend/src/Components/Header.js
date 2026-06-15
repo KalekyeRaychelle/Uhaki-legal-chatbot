@@ -1,24 +1,28 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import logo from '../Assets/logo.png';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../Styles/Header.css';
+import { IconScale } from '@tabler/icons-react';
+import { IconRefresh } from '@tabler/icons-react';
 
 const Header = ({ onClearChat }) => {
-  const location = useLocation();
-  const onChatPage = location.pathname === '/ChatPage';
+  
+  return (  
+      <div className='header'>
+        <div className="chatLeft">
+          <div className="logo-box">
+            <IconScale />
+          </div>
 
-  return (
-    <div className='header'>
-      <div className='heading'>
-        <img src={logo} alt='logo' />
-        <h1>Uhaki</h1>
+        <div className="titleGroup">
+          <span>Uhaki</span>
+          <p>Legal assistant · Kenya</p>
+        </div>
       </div>
-
-      {onChatPage && (
-        <button className="clear-btn" onClick={onClearChat}>
-           Clear Chat
-        </button>
-      )}
+      <div className='chatRight'>
+        <a href="/">Home</a>
+        <a>Acts Covered</a>
+        <button onClick={onClearChat}><IconRefresh size={16}/> Clear Chat</button>
+      </div>
     </div>
   );
 };
