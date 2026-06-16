@@ -4,6 +4,7 @@ import './App.css';
 import ChatPage from './Pages/ChatPage';
 import LandinPage from './Pages/LandinPage';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import ActsCovered from './Pages/ActsCovered';
 
 function App() {
   const location = useLocation();
@@ -15,7 +16,7 @@ function App() {
 
   const handleClearChat = () => {
     if (chatRef.current) {
-      chatRef.current(); // trigger ChatPage's clear function
+      chatRef.current();
     }
   };
 
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandinPage />} />
         <Route path="/ChatPage" element={<ChatPage registerClear={chatRef} />} />
+        <Route path="/ActsCovered" element={<ActsCovered/>}/>
       </Routes>
     </div>
   );

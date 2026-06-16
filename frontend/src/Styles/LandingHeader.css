@@ -35,7 +35,7 @@
     gap:20px;
     padding: 10px 20px; 
 }
-.leftSide span,
+.leftSide span, a,
 .leftSide .nav-link{
     background: transparent;
     border: 0;
@@ -45,8 +45,9 @@
     color: #888780;
     cursor: pointer;
     font-weight: normal;
+    text-decoration: none;
 }
-.leftSide span:hover,
+.leftSide span,a:hover,
 .leftSide .nav-link:hover{
     color: #6C5CE7;
 }

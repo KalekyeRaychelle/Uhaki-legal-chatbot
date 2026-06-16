@@ -5,9 +5,12 @@ import Outline from '../Assets/Outline.png';
 import '../Styles/midSectionLanding.css';
 const MidLanding = () => {
 	
-		const navigate = useNavigate();
+	const navigate = useNavigate();
   const handleChatClick = () => {
     navigate('/ChatPage');
+  };
+  const onActsCoveredClick=()=>{
+        navigate('/ActsCovered')
   };
 
   useEffect(() => {
@@ -117,7 +120,7 @@ const MidLanding = () => {
             <p>Ask questions about Kenyan law in plain language. Uhaki pulls answers directly from 20 acts and the Constitution; with sources.</p>
             <div className='convoSide'>
               <button onClick={handleChatClick}> Start a conversation</button>
-              <button type="button" className="text-link">See what I can answer</button>
+              <button onClick={onActsCoveredClick} className="text-link">See what I can answer</button>
             </div>
             <div className="floatBoats">
               <span>Constitutional rights</span>
