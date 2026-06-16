@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
-import "../Styles/midSectionLanding.css";
-import Outline from "../Assets/Outline.png"
+import React from 'react'
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-const MidSectionLanding = () => {
-  const navigate = useNavigate();
+import Outline from '../Assets/Outline.png';
+import '../Styles/midSectionLanding.css';
+const MidLanding = () => {
+	
+		const navigate = useNavigate();
   const handleChatClick = () => {
     navigate('/ChatPage');
   };
@@ -150,7 +152,7 @@ const MidSectionLanding = () => {
             </div>
           </div>
    </section>
-  )
+	)
 }
 
-export default MidSectionLanding
+export default MidLanding
