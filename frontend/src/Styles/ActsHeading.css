@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500&display=swap");
+.ActsHeading{
+    height: fit-content;
+    border-bottom: 0.5px solid #EEEDFE;
+    border-top: 0.5px solid #EEEDFE;
+    padding: 10px 30px 10px;
+    background: white;
+}
+.ActsHeading h1{
+    text-align: left;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 26px;
+    font-weight: 700; 
+    color: #2C2C2A;
+    margin-bottom: 6px;
+}
+.ActsHeading p{
+    text-align: left;
+    font-size: 14px;
+    color: #5F5E5A;
+    line-height: 1.6;
+    max-width: 520px; 
+}

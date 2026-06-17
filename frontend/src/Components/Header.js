@@ -19,7 +19,7 @@ const Header = ({ onClearChat }) => {
       </div>
       <div className='chatRight'>
         <a href="/">Home</a>
-        <a href='/acts'>Acts Covered</a>
+        <a href='/ActsCovered'>Acts Covered</a>
         <button onClick={onClearChat}><IconRefresh size={16}/> Clear Chat</button>
       </div>
     </div>
