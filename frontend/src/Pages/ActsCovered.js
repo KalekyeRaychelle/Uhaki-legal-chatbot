@@ -1,11 +1,14 @@
-import React from 'react';
 import ActsHeader from '../Components/ActsHeader';
 import ActsHeading from '../Components/ActsHeading';
 import SearchBar from '../Components/SearchBar';
 import '../Styles/ActsCovered.css';
+import React, { useState } from 'react';
 import { IconBook2, IconBabyCarriage, IconGavel, IconDatabase, IconLock, IconBriefcase, IconFileSearch, IconReceiptTax, IconAlertTriangle, IconCoin, IconUsers, IconMap, IconFileText, IconFileCertificate, IconHeart, IconWheelchair, IconScale, IconClipboardList, IconReceipt2, IconFirstAidKit } from "@tabler/icons-react";
 const ActsCovered = () => {
-  const acts = [
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+   const acts = [
   {
     name: "Children Act (2022)",
     desc: "Protects children's rights and provides for parental responsibility, custody, guardianship, adoption, child protection, and children in conflict with the law.",
@@ -159,11 +162,31 @@ const ActsCovered = () => {
     category: "employment"
   }
 ];
+  const filteredActs = acts.filter((act) => {
+  const matchesSearch =
+    act.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    act.desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    act.tags.some(tag =>
+      tag.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  const matchesCategory =
+    selectedCategory === 'all' ||
+    act.category === selectedCategory;
+
+  return matchesSearch && matchesCategory;
+});
+ 
   return (
     <>
     <ActsHeader/>
     <ActsHeading/>
-    <SearchBar/>
+    <SearchBar
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      selectedCategory={selectedCategory}
+      setSelectedCategory={setSelectedCategory}
+    />
     <div>
     <div className="constitution-banner">
       <div>
@@ -174,34 +197,35 @@ const ActsCovered = () => {
     </div>
   </div>
     <div className="acts-covered">
-    {acts.map((act, index) => {
-  const Icon = act.icon;
+ 
+  {filteredActs.map((act, index) => {
+    const Icon = act.icon;
 
-  return (
-    <div className="act-card" key={index}>
-      <div className="act-top">
-        <div className={`act-icon ${act.color}`}>
-          <Icon size={24} />
+    return (
+      <div className="act-card" key={index}>
+        <div className="act-top">
+          <div className={`act-icon ${act.color}`}>
+            <Icon size={24} />
+          </div>
+
+          <div>
+            <div className="act-name">{act.name}</div>
+          </div>
         </div>
 
-        <div>
-          <div className="act-name">{act.name}</div>
+        <div className="act-desc">{act.desc}</div>
+
+        <div className="act-tags">
+          {act.tags.map((tag, tagIndex) => (
+            <span key={tagIndex} className="act-tag">
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
-
-      <div className="act-desc">{act.desc}</div>
-
-      <div className="act-tags">
-        {act.tags.map((tag, tagIndex) => (
-          <span key={tagIndex} className="act-tag">
-            {tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-})}
-    </div>
+    );
+  })}
+</div>
     </>
    
 
