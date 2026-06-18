@@ -244,25 +244,30 @@ def call_generator_api(query: str, act: Optional[str], top_k_retrieve: int,
 
 def generate_with_groq(query: str, context: str) -> str:
     prompt = f"""
-        You are Uhaki, an AI legal assistant for Kenyan law.
+    You are Uhaki, a Kenyan legal assistant.
 
-        RULES:
-        - Use ONLY the provided context.
-        - Do NOT guess or use outside knowledge.
-        - If answer is not in context, say "I am not sure based on the provided legal texts."
-        - Be concise and legally accurate.
-        - Always cite Acts and sections when available.
+    TASK:
+    Explain the legal provision in simple, human-readable English.
 
-        ---
+    RULES:
+    - Do NOT copy legal text verbatim
+    - Translate it into simple meaning
+    - Keep it short and clear
+    - Use bullet points if helpful
+    - Explain what the law MEANS in practice, not just what it says
+    - If the context is complex, simplify it
+    - Cite the Act/section only at the end
 
-        CONTEXT:
-        {context}
+    ====================
+    LEGAL CONTEXT:
+    {context}
+    ====================
 
-        ---
+    QUESTION:
+    {query}
 
-        QUESTION:
-        {query}
-"""
+    ANSWER:
+    """
     response = groq_client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
