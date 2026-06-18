@@ -8,17 +8,21 @@ import pandas as pd
 import chromadb
 from sentence_transformers import SentenceTransformer
 import requests
+from groq import Groq
 
 # ============================
 # Config
 # ============================
+from dotenv import load_dotenv
+load_dotenv()
 CHROMA_PATH     = os.getenv("CHROMA_PATH", "../data/scripts/chroma")
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "actSectionsV2")
 EMBED_MODEL     = os.getenv("HF_EMBED_MODEL", "intfloat/e5-base-v2")
 
 TOP_K_RETRIEVE  = int(os.getenv("TOP_K_RETRIEVE", "12"))
 TOP_K_RETURN    = int(os.getenv("TOP_K_RETURN", "5"))
-
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+groq_client = Groq(api_key=GROQ_API_KEY)
 CSV_LOG         = os.path.abspath(os.getenv("CSV_LOG", "../outputs/queryLog.csv"))
 LOG_LEVEL       = os.getenv("APP_LOG_LEVEL", "DEBUG").upper()
 GENERATOR_URL   = os.getenv("GENERATOR_URL", "").strip()
@@ -238,6 +242,41 @@ def call_generator_api(query: str, act: Optional[str], top_k_retrieve: int,
     resp.raise_for_status()
     return resp.json()
 
+def generate_with_groq(query: str, context: str) -> str:
+    prompt = f"""
+    You are Uhaki, a Kenyan legal assistant.
+
+    TASK:
+    Explain the legal provision in simple, human-readable English.
+
+    RULES:
+    - Do NOT copy legal text verbatim
+    - Translate it into simple meaning
+    - Keep it short and clear
+    - Use bullet points if helpful
+    - Explain what the law MEANS in practice, not just what it says
+    - If the context is complex, simplify it
+    - Cite the Act/section only at the end
+
+    ====================
+    LEGAL CONTEXT:
+    {context}
+    ====================
+
+    QUESTION:
+    {query}
+
+    ANSWER:
+    """
+    response = groq_client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.2
+    )
+
+    return response.choices[0].message.content
 
 def fetch_docs_by_ids(ids: List[str]) -> Dict[str, Dict[str, Any]]:
     unique_ids: List[str] = []
@@ -308,20 +347,15 @@ def health():
         "embed_model": EMBED_MODEL,
         "generator_url": GENERATOR_URL if GENERATOR_URL else None
     })
-
 @app.route("/askQuery", methods=["POST"])
 def ask_query():
     req_id = str(uuid.uuid4())[:8]
     t0 = time.perf_counter()
 
-    try:
-        data = request.get_json(force=True) or {}
-    except Exception:
-        logging.exception(f"[{req_id}] Bad JSON payload")
-        return jsonify({"error": "Invalid JSON"}), 400
+    data = request.get_json(force=True) or {}
 
     query = (data.get("query") or "").strip()
-    act   = (data.get("act") or "").strip() or None
+    act = (data.get("act") or "").strip() or None
     top_k_ret = int(data.get("top_k_retrieve", TOP_K_RETRIEVE))
     top_k_out = int(data.get("top_k_return", TOP_K_RETURN))
     include_context = bool(data.get("include_context", True))
@@ -329,79 +363,38 @@ def ask_query():
     if not query:
         return jsonify({"error": "No query provided"}), 400
 
-    logging.info(
-        f"[{req_id}] Query: {query!r} | act_filter={act} | k={top_k_ret}/{top_k_out} | mode={BACKEND_MODE}"
-    )
+    # 1. Retrieval
+    rows_before, embed_ms, chroma_ms = retrieve_dense(query, act, top_k_ret)
 
-    if GENERATOR_URL:
-        try:
-            generator_payload = call_generator_api(query, act, top_k_ret, top_k_out, include_context)
-        except requests.Timeout:
-            logging.exception(f"[{req_id}] Generator timed out")
-            return jsonify({"error": "Generator timeout"}), 504
-        except requests.RequestException:
-            logging.exception(f"[{req_id}] Generator request failed")
-            return jsonify({"error": "Generator request failed"}), 502
-
-        total_ms = round((time.perf_counter() - t0) * 1000, 2)
-        top_results = hydrate_generator_sources(generator_payload, top_k_out)
-        model_answer = generator_payload.get("answer")
-        resp = {
-            "request_id": req_id,
-            "query": query,
-            "answer": model_answer,
-            "top_results": top_results,
-            "timings": generator_payload.get("timings") or {"total_ms": total_ms},
-            "proxy": True
-        }
-        if include_context and top_results:
-            resp["context"] = build_context(top_results)
-
-        top = top_results[0] if top_results else {}
-        log_row = build_query_log_row(query, top, model_answer, total_ms)
-        try:
-            log_to_csv(log_row)
-        except Exception as e:
-            logging.warning(f"[{req_id}] CSV log failed: {e}")
-
-        logging.info(f"[{req_id}] Proxy completed in {total_ms} ms | top_act={top.get('act','')}")
-        return jsonify(resp)
-
-    # 1) Dense retrieval
-    try:
-        rows_before, embed_ms, chroma_ms = retrieve_dense(query, act, top_k_ret)
-    except Exception:
-        logging.exception(f"[{req_id}] Retrieval failed")
-        return jsonify({"error": "Retrieval failed"}), 500
-
-    # 2) Rerank
+    # 2. Rerank
     rows_after, rerank_ms = apply_rerank(query, rows_before)
-    logging.info(f"[{req_id}] Rerank ran in {rerank_ms} ms")
+
+    # 3. Build context
+    context = build_context(rows_after[:top_k_out])
+
+    # 4. GROQ GENERATION 
+    try:
+        model_answer = generate_with_groq(query, context)
+    except Exception as e:
+        logging.exception(f"[{req_id}] Groq failed")
+        return jsonify({"error": "LLM generation failed"}), 500
 
     total_ms = round((time.perf_counter() - t0) * 1000, 2)
-    top = rows_after[0] if rows_after else {}
 
-    log_row = build_query_log_row(query, top, None, total_ms)
-    try:
-        log_to_csv(log_row)
-    except Exception as e:
-        logging.warning(f"[{req_id}] CSV log failed: {e}")
-
-    logging.info(f"[{req_id}] Done in {total_ms} ms | top: {top.get('act','')}, s_after={top.get('score_after','')}")
-
-    def pack_source(r: Dict[str, Any]) -> Dict[str, Any]:
+    def pack_source(r):
         return {
             "id": r.get("id"),
             "act": r.get("act"),
             "section": r.get("section"),
+            "text": r.get("text"),
             "score_before": r.get("score_before"),
             "score_after": r.get("score_after"),
-            "text": r.get("text"),
         }
 
     resp = {
         "request_id": req_id,
         "query": query,
+        "answer": model_answer,
         "timings": {
             "embed_ms": embed_ms,
             "chroma_ms": chroma_ms,
@@ -409,13 +402,10 @@ def ask_query():
             "total_ms": total_ms
         },
         "top_results": [pack_source(r) for r in rows_after[:top_k_out]],
-        "proxy": False
+        "context": context if include_context else None
     }
-    if include_context:
-        resp["context"] = build_context(rows_after[:top_k_out])
 
     return jsonify(resp)
-
 # ============================
 # Main
 # ============================
