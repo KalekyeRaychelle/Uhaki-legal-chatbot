@@ -68,7 +68,7 @@
 .chatRight a:hover{
     color: #6C5CE7;
 }
-.chatRight button:not(.nav-link){
+.clear-btn:not(.nav-link){
     padding: 8px 16px;
     background-color: #6C5CE7;
     color: white;
@@ -84,7 +84,7 @@
     overflow: hidden;
     z-index: 1;
     isolation:isolate;}
-.chatRight button:not(.nav-link)::after {
+.clear-btn:not(.nav-link)::after {
         content: '';
         position: absolute;
         inset:0;
@@ -92,7 +92,7 @@
         z-index: -2;
     }
 
-.chatRight button:not(.nav-link)::before {
+.clear-btn:not(.nav-link)::before {
         content: '';
         position: absolute;
         inset:0;
@@ -102,8 +102,26 @@
         transition: width .3s ease;
         z-index: -1;
     }
-.chatRight button:not(.nav-link):hover::before {
+.clear-btn:not(.nav-link):hover::before {
     width: 100%;
 }
-    
 
+.lang-btn,.lang-btn1{
+    background: transparent ;
+    color: #888780;
+    border: none;
+    padding: 5px 5px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    font-size: 16px;
+
+}
+.lang-btn1{
+    border-right: #888780 solid 1px;
+}
+.lang-btn1:hover{
+    color: #6C5CE7;
+}
+.lang-btn:hover{
+    color: #6C5CE7;
+}
