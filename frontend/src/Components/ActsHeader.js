@@ -6,7 +6,7 @@ const ActsHeader = () => {
        const navigate = useNavigate();
       const handleChatClick = () => {
 
-        navigate('/');
+        navigate('/ChatPage');
       }
   return (
     <div className="landingHeader">
@@ -16,7 +16,11 @@ const ActsHeader = () => {
         </div>
         <div className='leftSide'>
              <a href="/">Home</a>
-            <button onClick={handleChatClick}>Start Chatting</button>
+            <button onClick={handleChatClick} className='chat-btn'>Start Chatting</button>
+             <div className='language'>
+                <button className='lang-btn1'>EN</button>
+                <button className='lang-btn'>SW</button>
+            </div>
         </div>
       
     </div>

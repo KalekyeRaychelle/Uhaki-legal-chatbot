@@ -19,9 +19,13 @@ const LandingHeader = () => {
         </div>
         <div className='leftSide'>
             <button type="button" className="nav-link" onClick={onActsCoveredClick}>Acts covered</button>
-            <button onClick={handleChatClick}>Start Chatting</button>
+            <button onClick={handleChatClick} className='chat-btn'>Start Chatting</button>
+             <div className='language'>
+                <button className='lang-btn1'>EN</button>
+                <button className='lang-btn'>SW</button>
+            </div>
         </div>
-      
+        
     </div>
   )
 }
