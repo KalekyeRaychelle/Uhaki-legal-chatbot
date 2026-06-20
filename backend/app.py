@@ -9,6 +9,7 @@ import chromadb
 from sentence_transformers import SentenceTransformer
 import requests
 from groq import Groq
+from deep_translator import GoogleTranslator
 
 # ============================
 # Config
@@ -278,6 +279,50 @@ def generate_with_groq(query: str, context: str) -> str:
 
     return response.choices[0].message.content
 
+SUPPORTED_LANGS = {"en", "sw"}
+
+def translate_query_to_english(query: str) -> str:
+    """Translate an incoming Swahili query to English before embedding/retrieval.
+    The embedder (e5-base-v2) is English-only, so retrieval must always run on English text."""
+    try:
+        translated = GoogleTranslator(source="sw", target="en").translate(query)
+        return translated or query
+    except Exception:
+        logging.exception("[TRANSLATE] Query translation failed; falling back to original query")
+        return query
+
+def protect_citations(text: str, act_names: List[str], sections: List[str]) -> Tuple[str, Dict[str, str]]:
+    """Swap act/section names for placeholder tokens before translating, so GoogleTranslator
+    doesn't mangle terms like 'Employment Act' or 'Section 45' into Swahili."""
+    placeholders: Dict[str, str] = {}
+    protected_text = text
+    terms = sorted(
+        {t.strip() for t in (act_names + sections) if t and t.strip()},
+        key=len,
+        reverse=True 
+    )
+    for i, term in enumerate(terms):
+        if term in protected_text:
+            token = f"__CITE{i}__"
+            placeholders[token] = term
+            protected_text = protected_text.replace(term, token)
+    return protected_text, placeholders
+
+def restore_citations(text: str, placeholders: Dict[str, str]) -> str:
+    for token, term in placeholders.items():
+        text = text.replace(token, term)
+    return text
+
+def translate_answer_to_swahili(answer: str, act_names: List[str], sections: List[str]) -> str:
+    """Translate the English answer to Swahili, keeping act names/section numbers in English."""
+    try:
+        protected, placeholders = protect_citations(answer, act_names, sections)
+        translated = GoogleTranslator(source="en", target="sw").translate(protected)
+        return restore_citations(translated, placeholders)
+    except Exception:
+        logging.exception("[TRANSLATE] Answer translation failed; returning English answer")
+        return answer
+
 def fetch_docs_by_ids(ids: List[str]) -> Dict[str, Dict[str, Any]]:
     unique_ids: List[str] = []
     seen = set()
@@ -335,9 +380,7 @@ def hydrate_generator_sources(gen_payload: Dict[str, Any], limit: int) -> List[D
         })
     return hydrated
 
-# ============================
-# Routes
-# ============================
+
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({
@@ -355,6 +398,9 @@ def ask_query():
     data = request.get_json(force=True) or {}
 
     query = (data.get("query") or "").strip()
+    lang = (data.get("lang") or "en").strip().lower()
+    if lang not in SUPPORTED_LANGS:
+        lang = "en"
     act = (data.get("act") or "").strip() or None
     top_k_ret = int(data.get("top_k_retrieve", TOP_K_RETRIEVE))
     top_k_out = int(data.get("top_k_return", TOP_K_RETURN))
@@ -362,22 +408,29 @@ def ask_query():
 
     if not query:
         return jsonify({"error": "No query provided"}), 400
+    retrieval_query = query
+    if lang == "sw":
+        retrieval_query = translate_query_to_english(query)
+        logging.debug(f"[{req_id}] Translated query: {query!r} -> {retrieval_query!r}")
 
-    # 1. Retrieval
-    rows_before, embed_ms, chroma_ms = retrieve_dense(query, act, top_k_ret)
 
-    # 2. Rerank
-    rows_after, rerank_ms = apply_rerank(query, rows_before)
-
-    # 3. Build context
+    rows_before, embed_ms, chroma_ms = retrieve_dense(retrieval_query, act, top_k_ret)
+    rows_after, rerank_ms = apply_rerank(retrieval_query, rows_before)
     context = build_context(rows_after[:top_k_out])
 
-    # 4. GROQ GENERATION 
+   
     try:
-        model_answer = generate_with_groq(query, context)
+        model_answer = generate_with_groq(retrieval_query, context)
     except Exception as e:
         logging.exception(f"[{req_id}] Groq failed")
         return jsonify({"error": "LLM generation failed"}), 500
+
+    
+    final_answer = model_answer
+    if lang == "sw":
+        act_names = [r.get("act") for r in rows_after[:top_k_out]]
+        sections = [r.get("section") for r in rows_after[:top_k_out]]
+        final_answer = translate_answer_to_swahili(model_answer, act_names, sections)
 
     total_ms = round((time.perf_counter() - t0) * 1000, 2)
 
@@ -394,7 +447,8 @@ def ask_query():
     resp = {
         "request_id": req_id,
         "query": query,
-        "answer": model_answer,
+        "lang": lang,
+        "answer": final_answer,
         "timings": {
             "embed_ms": embed_ms,
             "chroma_ms": chroma_ms,
