@@ -1,30 +1,59 @@
 import React from 'react';
 import '../Styles/Header.css';
-import { IconScale } from '@tabler/icons-react';
-import { IconRefresh } from '@tabler/icons-react';
+import { IconScale, IconRefresh } from '@tabler/icons-react';
+import { useLanguage } from '../Context/LanguageContext';
+import { Link } from 'react-router-dom';
+const STRINGS = {
+  en: {
+    subtitle: 'Legal assistant · Kenya',
+    home: 'Home',
+    acts: 'Acts Covered',
+    clear: 'Clear Chat',
+  },
+  sw: {
+    subtitle: 'Msaidizi wa kisheria · Kenya',
+    home: 'Nyumbani',
+    acts: 'Sheria Zilizotumiwa',
+    clear: 'Futa Mazungumzo',
+  }
+};
 
 const Header = ({ onClearChat }) => {
-  
-  return (  
-      <div className='header'>
-        <div className="chatLeft">
-          <div className="logo-box">
-            <IconScale />
-          </div>
+  const { lang, setLang } = useLanguage();
+  const t = STRINGS[lang];
 
+  return (
+    <div className='header'>
+      <div className="chatLeft">
+        <div className="logo-box">
+          <IconScale />
+        </div>
         <div className="titleGroup">
           <span>Uhaki</span>
-          <p>Legal assistant · Kenya</p>
+          <p>{t.subtitle}</p>
         </div>
       </div>
-      <div className='chatRight'>
-        <a href="/">Home</a>
-        <a href='/ActsCovered'>Acts Covered</a>
-        <button onClick={onClearChat} className='clear-btn'><IconRefresh size={16}/> Clear Chat</button>
 
-         <div className='language'>
-                <button className='lang-btn1'>EN</button>
-                <button className='lang-btn'>SW</button>
+      <div className='chatRight'>
+        <Link to='/'>{t.home}</Link>
+        <Link to='/ActsCovered'>{t.acts}</Link>
+        <button onClick={onClearChat} className='clear-btn'>
+          <IconRefresh size={16} /> {t.clear}
+        </button>
+
+        <div className='language'>
+          <button
+            className={`lang-btn1 ${lang === 'en' ? 'lang-active' : ''}`}
+            onClick={() => setLang('en')}
+          >
+            EN
+          </button>
+          <button
+            className={`lang-btn ${lang === 'sw' ? 'lang-active' : ''}`}
+            onClick={() => setLang('sw')}
+          >
+            SW
+          </button>
         </div>
       </div>
     </div>

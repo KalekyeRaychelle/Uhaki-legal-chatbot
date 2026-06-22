@@ -5,13 +5,13 @@ import ChatPage from './Pages/ChatPage';
 import LandinPage from './Pages/LandinPage';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ActsCovered from './Pages/ActsCovered';
+import { LanguageProvider } from './Context/LanguageContext';
 
 function App() {
   const location = useLocation();
   const path = location.pathname;
   const showHeader = path === '/ChatPage';
 
-  // A reference to trigger clearChat inside ChatPage
   const chatRef = useRef();
 
   const handleClearChat = () => {
@@ -21,14 +21,16 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {showHeader && <Header onClearChat={handleClearChat} />}
-      <Routes>
-        <Route path="/" element={<LandinPage />} />
-        <Route path="/ChatPage" element={<ChatPage registerClear={chatRef} />} />
-        <Route path="/ActsCovered" element={<ActsCovered/>}/>
-      </Routes>
-    </div>
+    <LanguageProvider>
+      <div className="App">
+        {showHeader && <Header onClearChat={handleClearChat} />}
+        <Routes>
+          <Route path="/" element={<LandinPage />} />
+          <Route path="/ChatPage" element={<ChatPage registerClear={chatRef} />} />
+          <Route path="/ActsCovered" element={<ActsCovered />} />
+        </Routes>
+      </div>
+    </LanguageProvider>
   );
 }
 
