@@ -2,7 +2,7 @@ import React from 'react';
 import '../Styles/Header.css';
 import { IconScale, IconRefresh } from '@tabler/icons-react';
 import { useLanguage } from '../Context/LanguageContext';
-
+import { Link } from 'react-router-dom';
 const STRINGS = {
   en: {
     subtitle: 'Legal assistant · Kenya',
@@ -35,8 +35,8 @@ const Header = ({ onClearChat }) => {
       </div>
 
       <div className='chatRight'>
-        <a href="/">{t.home}</a>
-        <a href='/ActsCovered'>{t.acts}</a>
+        <Link to='/'>{t.home}</Link>
+        <Link to='/ActsCovered'>{t.acts}</Link>
         <button onClick={onClearChat} className='clear-btn'>
           <IconRefresh size={16} /> {t.clear}
         </button>

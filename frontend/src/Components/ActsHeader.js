@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconScale } from '@tabler/icons-react';
 import '../Styles/LandingHeader.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useLanguage } from '../Context/LanguageContext';
 
 const STRINGS = {
@@ -34,8 +34,7 @@ const ActsHeader = () => {
       </div>
 
       <div className="leftSide">
-        <a href="/">{t.home}</a>
-
+        <Link to='/'>{t.home}</Link>
         <button onClick={handleChatClick} className="chat-btn">
           {t.chat}
         </button>
