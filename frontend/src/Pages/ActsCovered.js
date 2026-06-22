@@ -3,12 +3,184 @@ import ActsHeading from '../Components/ActsHeading';
 import SearchBar from '../Components/SearchBar';
 import '../Styles/ActsCovered.css';
 import React, { useState } from 'react';
-import { IconBook2, IconBabyCarriage, IconGavel, IconDatabase, IconLock, IconBriefcase, IconFileSearch, IconReceiptTax, IconAlertTriangle, IconCoin, IconUsers, IconMap, IconFileText, IconFileCertificate, IconHeart, IconWheelchair, IconScale, IconClipboardList, IconReceipt2, IconFirstAidKit } from "@tabler/icons-react";
+import { useLanguage } from '../Context/LanguageContext';
+import {IconBabyCarriage, IconGavel, IconDatabase, IconLock, IconBriefcase, IconFileSearch, IconReceiptTax, IconAlertTriangle, IconCoin, IconUsers, IconMap, IconFileText, IconFileCertificate, IconHeart, IconWheelchair, IconScale, IconClipboardList, IconReceipt2, IconFirstAidKit } from "@tabler/icons-react";
 const ActsCovered = () => {
+  const { lang } = useLanguage();
+ 
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-   const acts = [
+  const STRINGS = {
+    en: {
+      constitutionTitle: 'Constitution of Kenya, 2010',
+      constitutionDesc:
+        'The supreme law — covers fundamental rights, devolution, government structure, and more.',
+      foundationDoc: 'Foundation document',
+    },
+    sw: {
+      constitutionTitle: 'Katiba ya Kenya, 2010',
+      constitutionDesc:
+        'Sheria kuu ya nchi — inashughulikia haki za msingi, ugatuzi, muundo wa serikali na zaidi.',
+      foundationDoc: 'Hati ya Msingi',
+    },
+  };
+  const t = STRINGS[lang];
+  const actsSw = [
+  {
+    name: "Sheria ya Watoto (2022)",
+    desc: "Inalinda haki za watoto na kuweka masharti kuhusu wajibu wa wazazi, malezi, ulezi, uasili, ulinzi wa watoto na watoto walio katika mgongano na sheria.",
+    tags: ["Malezi", "Uasili", "Matunzo"],
+    color: "pink",
+    icon: IconBabyCarriage,
+    category: "family"
+  },
+  {
+    name: "Kanuni ya Mwenendo wa Mashauri ya Jinai (Sura ya 75)",
+    desc: "Taratibu za uchunguzi, kukamatwa, kusikilizwa kwa kesi na utoaji wa adhabu kwa makosa ya jinai.",
+    tags: ["Kukamatwa", "Kesi", "Adhabu"],
+    color: "coral",
+    icon: IconGavel,
+    category: "rights"
+  },
+  {
+    name: "Sheria ya Ulinzi wa Data (2019)",
+    desc: "Haki zinazohusiana na data binafsi, wajibu wa wasimamizi wa data na faragha ya taarifa.",
+    tags: ["Faragha", "Haki za Data", "Wasimamizi"],
+    color: "teal",
+    icon: IconDatabase,
+    category: "rights"
+  },
+  {
+    name: "Sheria ya Kukamata Mali kwa Kodi ya Nyumba (Sura ya 293)",
+    desc: "Sheria kuhusu wakati na namna mwenye nyumba anaweza kukamata mali kwa sababu ya kodi isiyolipwa.",
+    tags: ["Madeni ya Kodi", "Ukamataji"],
+    color: "coral",
+    icon: IconLock,
+    category: "property"
+  },
+  {
+    name: "Sheria ya Ajira (2007)",
+    desc: "Inasimamia mikataba ya ajira, kusitishwa kwa kazi, mishahara, likizo na haki za wafanyakazi.",
+    tags: ["Mikataba", "Mishahara", "Likizo", "Kufutwa Kazi"],
+    color: "purple",
+    icon: IconBriefcase,
+    category: "employment"
+  },
+  {
+    name: "Sheria ya Ushahidi (Sura ya 80)",
+    desc: "Sheria kuhusu ushahidi unaokubalika na namna unavyoweza kuwasilishwa mahakamani.",
+    tags: ["Ukubalifu", "Ushahidi", "Mahakama"],
+    color: "blue",
+    icon: IconFileSearch,
+    category: "rights"
+  },
+  {
+    name: "Sheria ya Ushuru wa Bidhaa (2015)",
+    desc: "Uwekaji na ukusanyaji wa ushuru wa bidhaa na huduma.",
+    tags: ["Ushuru", "Bidhaa", "Kodi"],
+    color: "amber",
+    icon: IconReceiptTax,
+    category: "business"
+  },
+  {
+    name: "Sheria ya Ajali Zinazosababisha Kifo (Sura ya 32)",
+    desc: "Madai ya fidia kwa wategemezi pale kifo kinaposababishwa na kitendo kisicho halali cha mtu mwingine.",
+    tags: ["Fidia", "Kifo", "Wategemezi"],
+    color: "coral",
+    icon: IconAlertTriangle,
+    category: "rights"
+  },
+  {
+    name: "Sheria ya Kodi ya Mapato (Sura ya 470)",
+    desc: "Sheria kuhusu tathmini na ulipaji wa kodi ya mapato kwa watu binafsi na biashara.",
+    tags: ["Kodi", "Mapato", "Uwasilishaji"],
+    color: "amber",
+    icon: IconCoin,
+    category: "business"
+  },
+  {
+    name: "Sheria ya Mahusiano ya Kazi (2007)",
+    desc: "Inahusu vyama vya wafanyakazi, majadiliano ya pamoja, migomo na migogoro kati ya waajiri na wafanyakazi.",
+    tags: ["Vyama", "Migomo", "Migogoro"],
+    color: "purple",
+    icon: IconUsers,
+    category: "employment"
+  },
+  {
+    name: "Sheria ya Ardhi (2012)",
+    desc: "Inahusu umiliki wa ardhi, miamala, upangaji na usimamizi wa ardhi ya umma na binafsi.",
+    tags: ["Umiliki", "Ukodishaji", "Miamala"],
+    color: "coral",
+    icon: IconMap,
+    category: "property"
+  },
+  {
+    name: "Sheria ya Mikataba (Sura ya 23)",
+    desc: "Inaweka masharti ya kisheria kwa baadhi ya mikataba na kusimamia uundaji, utekelezaji na fidia za ukiukaji wa mikataba.",
+    tags: ["Mikataba", "Ukiukaji", "Makubaliano"],
+    color: "blue",
+    icon: IconFileText,
+    category: "business"
+  },
+  {
+    name: "Sheria ya Urithi (Sura ya 160)",
+    desc: "Inahusu urithi, wosia, urithi bila wosia na usimamizi wa mali za marehemu.",
+    tags: ["Urithi", "Wosia", "Mali"],
+    color: "pink",
+    icon: IconFileCertificate,
+    category: "family"
+  },
+  {
+    name: "Sheria ya Ndoa (2014)",
+    desc: "Utambuzi wa aina za ndoa, usajili, kuvunjwa kwa ndoa na haki za wanandoa.",
+    tags: ["Ndoa", "Talaka", "Wanandoa"],
+    color: "pink",
+    icon: IconHeart,
+    category: "family"
+  },
+  {
+    name: "Sheria ya Watu Wenye Ulemavu (2003)",
+    desc: "Inakuza haki, urekebishaji, upatikanaji wa huduma na fursa sawa kwa watu wenye ulemavu.",
+    tags: ["Upatikanaji", "Ulinzi", "Haki"],
+    color: "teal",
+    icon: IconWheelchair,
+    category: "rights"
+  },
+  {
+    name: "Sheria ya Mahakama ya Madai Madogo (2016)",
+    desc: "Inaweka Mahakama ya Madai Madogo na taratibu za kutatua migogoro ya madai kwa njia rahisi, nafuu na ya haraka.",
+    tags: ["Migogoro", "Madai ya Kiraia", "Mahakama"],
+    color: "blue",
+    icon: IconScale,
+    category: "rights"
+  },
+  {
+    name: "Sheria ya Taratibu za Kodi (2015)",
+    desc: "Taratibu za usajili wa kodi, tathmini na utekelezaji wa sheria za kodi.",
+    tags: ["Usimamizi wa Kodi", "Uzingatiaji"],
+    color: "amber",
+    icon: IconClipboardList,
+    category: "business"
+  },
+  {
+    name: "Sheria ya Kodi ya Ongezeko la Thamani (2013)",
+    desc: "Uwekaji na ukusanyaji wa kodi ya ongezeko la thamani kwa bidhaa na huduma.",
+    tags: ["VAT", "Kodi", "Bidhaa"],
+    color: "amber",
+    icon: IconReceipt2,
+    category: "business"
+  },
+  {
+    name: "Sheria ya Fidia kwa Majeraha ya Kazini (2007)",
+    desc: "Fidia kwa wafanyakazi waliojeruhiwa au kufariki wakati wa kutekeleza kazi zao.",
+    tags: ["Jeraha", "Fidia", "Mahali pa Kazi"],
+    color: "purple",
+    icon: IconFirstAidKit,
+    category: "employment"
+  }
+];
+   const actsEn = [
   {
     name: "Children Act (2022)",
     desc: "Protects children's rights and provides for parental responsibility, custody, guardianship, adoption, child protection, and children in conflict with the law.",
@@ -162,6 +334,7 @@ const ActsCovered = () => {
     category: "employment"
   }
 ];
+  const acts = lang === 'sw' ? actsSw : actsEn;
   const filteredActs = acts.filter((act) => {
   const matchesSearch =
     act.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -176,7 +349,7 @@ const ActsCovered = () => {
 
   return matchesSearch && matchesCategory;
 });
- 
+  
   return (
     <>
     <ActsHeader/>
@@ -189,11 +362,13 @@ const ActsCovered = () => {
     />
     <div>
     <div className="constitution-banner">
-      <div>
-        <h3><i className="ti ti-award"  aria-hidden="true"></i>Constitution of Kenya, 2010</h3>
-        <p>The supreme law — covers fundamental rights, devolution, government structure, and more.</p>
-      </div>
-      <div className="badge">Foundation document</div>
+        <h3> <i className="ti ti-award" aria-hidden="true"></i>
+          {t.constitutionTitle}
+        </h3>
+
+        <p>{t.constitutionDesc}</p>
+
+        <div className="badge">{t.foundationDoc}</div>
     </div>
   </div>
     <div className="acts-covered">
