@@ -147,7 +147,7 @@ const MidLanding = () => {
     schedule(runStep, 1500);
 
     return () => { timers.forEach(t => { clearTimeout(t); clearInterval(t); }); };
-  }, [lang]); // re-runs when language switches
+  }, [lang,t]); // re-runs when language switches
 
   return (
     <section className='midSection'>

@@ -17,8 +17,7 @@ const STRINGS = {
 };
 const ChatPage = ({ registerClear }) => {
 
-  const { lang, setLang } = useLanguage();
-  const t = STRINGS[lang];
+  const { lang} = useLanguage();
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const bottomRef = useRef(null);
@@ -39,11 +38,11 @@ const ChatPage = ({ registerClear }) => {
         {
           id: generateId(),
           sender: 'uhaki',
-          text: "Hello! I'm Uhaki, your Kenyan legal assistant. Ask me anything about your rights, obligations, or how specific laws apply to your situation."
+          text: STRINGS[lang].welcome
         }
       ]);
     }
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -67,7 +66,7 @@ const ChatPage = ({ registerClear }) => {
         }
       };
     }
-  }, [registerClear]);
+  },  [registerClear, lang]);
 
   useLayoutEffect(() => {
     const bottomBar = bottomRef.current;
