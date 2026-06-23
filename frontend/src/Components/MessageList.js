@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { IconScale } from "@tabler/icons-react";
 import ReactMarkdown from "react-markdown";
 import "../Styles/MessageList.css";
 import robotLogo from "../Assets/robotlogo.webp";
@@ -93,7 +94,9 @@ const MessageList = ({ messages = [], isTyping = false, onPromptClick }) => {
 
       {isTyping && (
         <div className="message-row uhaki">
-          <div className="avatar" aria-hidden="true" />
+          <div className="avatar loading-avatar" aria-hidden="true">
+            <IconScale size={24} stroke={2.2} />
+          </div>
           <div className="bubble typing-bubble">
             <div className="typing">
               <span className="dot" />
