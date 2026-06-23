@@ -35,7 +35,7 @@
     display: inline-flex;
     align-items: center;
     font-family: 'DM Sans', sans-serif;
-    animation: floatBubble 4s ease-in-out infinite;
+    
 }
 
 @keyframes floatBubble {
@@ -121,6 +121,7 @@
       font-size:11px;
       color:#534AB7;
       cursor: pointer;
+      animation: floatBubble 4s ease-in-out infinite;
 }
 .floatBoats span:hover{
     background-color: #EEEDFE;
