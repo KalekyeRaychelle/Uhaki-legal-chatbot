@@ -1,8 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IconArrowUp } from "@tabler/icons-react";
 import "../Styles/MessageInput.css";
+import { useLanguage } from '../Context/LanguageContext';
 
+const STRINGS = {
+  en: {
+    placeholder: "Ask about your rights..."
+  },
+  sw: {
+    placeholder: "Uliza kuhusu haki zako..."
+  }
+};
 const MessageInput = ({ onSend }) => {
+  const { lang, setLang } = useLanguage();
+  const t = STRINGS[lang];
   const [value, setValue] = useState("");
   const textareaRef = useRef(null);
 
@@ -38,7 +49,7 @@ const MessageInput = ({ onSend }) => {
       <textarea
         ref={textareaRef}
         className="composer-input"
-        placeholder="Ask about your rights..."
+        placeholder={t.placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
