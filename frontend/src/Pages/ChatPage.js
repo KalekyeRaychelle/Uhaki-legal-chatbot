@@ -56,13 +56,23 @@ const ChatPage = ({ registerClear }) => {
   }, [registerClear]);
 
   useLayoutEffect(() => {
+    const bottomBar = bottomRef.current;
+
     const setBBHeight = () => {
-      const h = bottomRef.current?.offsetHeight || 0;
+      const h = bottomBar?.offsetHeight || 0;
       document.documentElement.style.setProperty('--bb-h', `${h}px`);
     };
+
     setBBHeight();
     window.addEventListener('resize', setBBHeight);
-    return () => window.removeEventListener('resize', setBBHeight);
+
+    const resizeObserver = bottomBar ? new ResizeObserver(setBBHeight) : null;
+    resizeObserver?.observe(bottomBar);
+
+    return () => {
+      window.removeEventListener('resize', setBBHeight);
+      resizeObserver?.disconnect();
+    };
   }, []);
 
   const handleSend = async (text) => {

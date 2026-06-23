@@ -6,11 +6,25 @@ body.chat-page-active {
   overflow: hidden;
 }
 
+body.chat-page-active #root,
+body.chat-page-active .App {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body.chat-page-active .App {
+  display: flex;
+  flex-direction: column;
+}
+
 .ChatPage {
-  height: 100vh;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   background: #fafafa;
+  padding-bottom: var(--bb-h);
+  box-sizing: border-box;
 }
 
 .ChatScroll {
@@ -29,6 +43,7 @@ body.chat-page-active {
   background: #fff;
   padding: 20px 24px 8px;
   box-sizing: border-box;
+  z-index: 20;
 }
 
 .BottomInner {
