@@ -10,8 +10,6 @@ import { LanguageProvider } from './Context/LanguageContext';
 function App() {
   const location = useLocation();
   const path = location.pathname;
-  const showHeader = path === '/ChatPage';
-
   const chatRef = useRef();
 
   const handleClearChat = () => {
@@ -23,12 +21,21 @@ function App() {
   return (
     <LanguageProvider>
       <div className="App">
-        {showHeader && <Header onClearChat={handleClearChat} />}
-        <Routes>
-          <Route path="/" element={<LandinPage />} />
-          <Route path="/ChatPage" element={<ChatPage registerClear={chatRef} />} />
-          <Route path="/ActsCovered" element={<ActsCovered />} />
-        </Routes>
+        <main className="route-shell" key={path}>
+          <Routes location={location}>
+            <Route path="/" element={<LandinPage />} />
+            <Route
+              path="/ChatPage"
+              element={
+                <>
+                  <Header onClearChat={handleClearChat} />
+                  <ChatPage registerClear={chatRef} />
+                </>
+              }
+            />
+            <Route path="/ActsCovered" element={<ActsCovered />} />
+          </Routes>
+        </main>
       </div>
     </LanguageProvider>
   );

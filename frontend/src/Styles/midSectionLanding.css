@@ -37,24 +37,6 @@
     font-family: 'DM Sans', sans-serif;
     
 }
-
-@keyframes floatBubble {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-    25% {
-        transform: translate(8px, -4px) scale(1.02);
-    }
-    50% {
-        transform: translate(0, -8px) scale(1.04);
-    }
-    75% {
-        transform: translate(-8px, -4px) scale(1.02);
-    }
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-}
 .midLeft h1{
    font-family: 'Libre Baskerville', serif;
    font-size: 36px; 
@@ -68,6 +50,24 @@
   font-style: italic; 
   color: #6C5CE7;
   font-family: 'Libre Baskerville', serif;
+}
+.animated-word {
+  display: inline-flex;
+}
+.midLeft h1 .animated-word span {
+  background: transparent;
+  border-radius: 0;
+  color: inherit;
+  display: inline-block;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  animation: letterRise 1.4s ease-in-out infinite;
+  animation-delay: var(--letter-delay, 0ms);
 }
 .midLeft p{
     font-family: 'DM Sans', sans-serif; 
@@ -253,6 +253,20 @@
  }
 
 @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+@keyframes letterRise {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    35% {
+        transform: translateY(-9px);
+    }
+
+    65% {
+        transform: translateY(3px);
+    }
+}
 .chat-float-input { 
     display: flex;
     align-items: center; 
