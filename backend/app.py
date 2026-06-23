@@ -24,12 +24,15 @@ TOP_K_RETRIEVE  = int(os.getenv("TOP_K_RETRIEVE", "12"))
 TOP_K_RETURN    = int(os.getenv("TOP_K_RETURN", "5"))
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 groq_client = Groq(api_key=GROQ_API_KEY)
-CSV_LOG         = os.path.abspath(os.getenv("CSV_LOG", "../outputs/queryLog.csv"))
+
 LOG_LEVEL       = os.getenv("APP_LOG_LEVEL", "DEBUG").upper()
 GENERATOR_URL   = os.getenv("GENERATOR_URL", "").strip()
 NOTEBOOK_API_KEY = os.getenv("NOTEBOOK_API_KEY", "")
 GENERATOR_TIMEOUT_S = int(os.getenv("GENERATOR_TIMEOUT_S", "120"))
 BACKEND_MODE    = "proxy" if GENERATOR_URL else "retrieval-only"
+
+CSV_LOG    = os.path.abspath(os.getenv("CSV_LOG",    "../outputs/questionsAskedEN.csv"))
+CSV_LOG_SW = os.path.abspath(os.getenv("CSV_LOG_SW", "../outputs/questionsAskedSW.csv"))
 LOG_COLUMNS     = [
     "Query",
     "Retrieved_Act",
@@ -203,17 +206,17 @@ def apply_rerank(query: str, chunks: List[Dict[str, Any]]) -> Tuple[List[Dict[st
     dt = round((time.perf_counter() - t0) * 1000, 2)
     return reranked, dt
 
-def log_to_csv(row: Dict[str, Any]):
+def log_to_csv(row: Dict[str, Any], lang: str = "en"):
     sanitized = {col: row.get(col, "") for col in LOG_COLUMNS}
     df = pd.DataFrame([sanitized], columns=LOG_COLUMNS)
+    target = CSV_LOG_SW if lang == "sw" else CSV_LOG
     header_needed = True
-    if os.path.exists(CSV_LOG):
+    if os.path.exists(target):
         try:
-            header_needed = os.path.getsize(CSV_LOG) == 0
+            header_needed = os.path.getsize(target) == 0
         except OSError:
             header_needed = False
-    df.to_csv(CSV_LOG, mode="a", index=False, header=header_needed)
-
+    df.to_csv(target, mode="a", index=False, header=header_needed)
 
 def call_generator_api(query: str, act: Optional[str], top_k_retrieve: int,
                        top_k_return: int, include_context: bool) -> Dict[str, Any]:
@@ -458,6 +461,13 @@ def ask_query():
         "top_results": [pack_source(r) for r in rows_after[:top_k_out]],
         "context": context if include_context else None
     }
+    log_row = build_query_log_row(
+        query=query,
+        top_chunk=rows_after[0] if rows_after else None,
+        model_answer=final_answer,
+        runtime_ms=total_ms
+    )
+    log_to_csv(log_row, lang=lang)
 
     return jsonify(resp)
 # ============================

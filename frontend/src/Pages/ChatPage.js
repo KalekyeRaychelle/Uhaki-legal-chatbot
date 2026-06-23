@@ -3,8 +3,22 @@ import Disclaimer from '../Components/Disclaimer';
 import MessageList from '../Components/MessageList';
 import MessageInput from '../Components/MessageInput';
 import '../Styles/ChatPage.css';
+import { useLanguage } from '../Context/LanguageContext';
 
+const STRINGS = {
+  en: {
+    welcome:
+      "Hello! I'm Uhaki, your Kenyan legal assistant. Ask me anything about your rights, obligations, or how specific laws apply to your situation.",
+  },
+  sw: {
+    welcome:
+      "Habari! Mimi ni Uhaki, msaidizi wako wa masuala ya sheria nchini Kenya. Uliza chochote kuhusu haki zako, wajibu wako, au jinsi sheria mbalimbali zinavyotumika katika hali yako.",
+  },
+};
 const ChatPage = ({ registerClear }) => {
+
+  const { lang, setLang } = useLanguage();
+  const t = STRINGS[lang];
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const bottomRef = useRef(null);
@@ -47,7 +61,7 @@ const ChatPage = ({ registerClear }) => {
             {
               id: generateId(),
               sender: 'uhaki',
-              text: "Hello! I'm Uhaki, your Kenyan legal assistant. Ask me anything about your rights, obligations, or how specific laws apply to your situation."
+              text:STRINGS[lang].welcome   
             }
           ]);
         }
