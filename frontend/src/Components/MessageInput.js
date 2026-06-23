@@ -12,7 +12,7 @@ const STRINGS = {
   }
 };
 const MessageInput = ({ onSend }) => {
-  const { lang, setLang } = useLanguage();
+  const { lang} = useLanguage();
   const t = STRINGS[lang];
   const [value, setValue] = useState("");
   const textareaRef = useRef(null);

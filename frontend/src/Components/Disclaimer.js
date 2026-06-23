@@ -11,7 +11,7 @@ const STRINGS={
   }
 }
 const Disclaimer = () => {
-  const { lang, setLang } = useLanguage();
+  const { lang} = useLanguage();
   const t = STRINGS[lang];
   return (
     <div className='disclaimer'>
