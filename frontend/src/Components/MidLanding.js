@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import Outline from '../Assets/Outline.png';
 import '../Styles/midSectionLanding.css';
 import { useLanguage } from '../Context/LanguageContext';
+import RevealOnScroll from './RevealOnScroll';
 
 const STRINGS = {
   en: {
     badge: 'Built for Kenya',
-    h1: <>Know your <em>rights</em>, simply.</>,
+    h1Start: 'Know your',
+    h1Word: 'rights',
+    h1End: ', simply.',
     p: 'Ask questions about Kenyan law in plain language. Uhaki pulls answers directly from 20 acts and the Constitution; with sources.',
     cta: 'Start a conversation',
     actsLink: 'See what I can answer',
@@ -24,7 +27,9 @@ const STRINGS = {
   },
   sw: {
     badge: 'Imeundwa kwa minajili ya Kenya',
-    h1: <>Jua <em>haki</em> zako, kwa urahisi.</>,
+    h1Start: 'Jua',
+    h1Word: 'haki',
+    h1End: ' zako, kwa urahisi.',
     p: 'Uliza maswali kuhusu sheria ya Kenya kwa lugha ya kawaida. Uhaki hutoa majibu moja kwa moja kutoka kwa sheria 20 na Katiba; na vyanzo.',
     cta: 'Anza mazungumzo',
     actsLink: 'Tazama ninachoweza kujibu',
@@ -48,6 +53,7 @@ const MidLanding = () => {
 
   const handleChatClick = () => navigate('/ChatPage');
   const onActsCoveredClick = () => navigate('/ActsCovered');
+  const animatedLetters = t.h1Word.split('');
 
   useEffect(() => {
     const conversation = t.conversation;
@@ -145,9 +151,23 @@ const MidLanding = () => {
 
   return (
     <section className='midSection'>
-      <div className="midLeft">
+      <RevealOnScroll className="midLeft">
         <span className="floating-badge">{t.badge}</span>
-        <h1>{t.h1}</h1>
+        <h1>
+          {t.h1Start}{' '}
+          <em className="animated-word" aria-label={t.h1Word}>
+            {animatedLetters.map((letter, index) => (
+              <span
+                key={`${t.h1Word}-${index}`}
+                aria-hidden="true"
+                style={{ '--letter-delay': `${index * 90}ms` }}
+              >
+                {letter}
+              </span>
+            ))}
+          </em>
+          {t.h1End}
+        </h1>
         <p>{t.p}</p>
         <div className='convoSide'>
           <button onClick={handleChatClick}>{t.cta}</button>
@@ -156,9 +176,9 @@ const MidLanding = () => {
         <div className="floatBoats">
           {t.chips.map((chip, i) => <span key={i}>{chip}</span>)}
         </div>
-      </div>
+      </RevealOnScroll>
 
-      <div className="midRight">
+      <RevealOnScroll className="midRight" delay={120}>
         <div className="outline">
           <img src={Outline} alt="country map" />
         </div>
@@ -184,7 +204,7 @@ const MidLanding = () => {
             </div>
           </div>
         </div>
-      </div>
+      </RevealOnScroll>
     </section>
   );
 };

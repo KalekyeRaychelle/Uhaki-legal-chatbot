@@ -4,6 +4,7 @@ import SearchBar from '../Components/SearchBar';
 import '../Styles/ActsCovered.css';
 import React, { useState } from 'react';
 import { useLanguage } from '../Context/LanguageContext';
+import RevealOnScroll from '../Components/RevealOnScroll';
 import {IconBabyCarriage, IconGavel, IconDatabase, IconLock, IconBriefcase, IconFileSearch, IconReceiptTax, IconAlertTriangle, IconCoin, IconUsers, IconMap, IconFileText, IconFileCertificate, IconHeart, IconWheelchair, IconScale, IconClipboardList, IconReceipt2, IconFirstAidKit } from "@tabler/icons-react";
 const ActsCovered = () => {
   const { lang } = useLanguage();
@@ -352,16 +353,22 @@ const ActsCovered = () => {
   
   return (
     <>
-    <ActsHeader/>
-    <ActsHeading/>
-    <SearchBar
-      searchTerm={searchTerm}
-      setSearchTerm={setSearchTerm}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-    />
+    <RevealOnScroll>
+      <ActsHeader/>
+    </RevealOnScroll>
+    <RevealOnScroll delay={80}>
+      <ActsHeading/>
+    </RevealOnScroll>
+    <RevealOnScroll delay={140}>
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+    </RevealOnScroll>
     <div>
-    <div className="constitution-banner">
+    <RevealOnScroll className="constitution-banner" delay={180}>
         <h3> <i className="ti ti-award" aria-hidden="true"></i>
           {t.constitutionTitle}
         </h3>
@@ -369,15 +376,19 @@ const ActsCovered = () => {
         <p>{t.constitutionDesc}</p>
 
         <div className="badge">{t.foundationDoc}</div>
-    </div>
+    </RevealOnScroll>
   </div>
-    <div className="acts-covered">
+    <RevealOnScroll className="acts-covered" delay={220}>
  
   {filteredActs.map((act, index) => {
     const Icon = act.icon;
 
     return (
-      <div className="act-card" key={index}>
+      <RevealOnScroll
+        className="act-card"
+        delay={(index % 6) * 70}
+        key={index}
+      >
         <div className="act-top">
           <div className={`act-icon ${act.color}`}>
             <Icon size={24} />
@@ -397,10 +408,10 @@ const ActsCovered = () => {
             </span>
           ))}
         </div>
-      </div>
+      </RevealOnScroll>
     );
   })}
-</div>
+</RevealOnScroll>
     </>
    
 

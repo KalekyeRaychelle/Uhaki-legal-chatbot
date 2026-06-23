@@ -46,6 +46,13 @@
     cursor: pointer; 
     transition: border-color 0.15s; 
 }
+.act-card.reveal-on-scroll {
+    transition:
+        opacity 0.55s ease,
+        transform 0.55s ease,
+        border-color 0.15s;
+    transition-delay: var(--reveal-delay, 0ms), var(--reveal-delay, 0ms), 0ms;
+}
 .act-card:hover { 
     border-color: #AFA9EC;
 }

@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import '../Styles/LandingBottom.css';
 import { useLanguage } from '../Context/LanguageContext';
+import RevealOnScroll from './RevealOnScroll';
 
 const STRINGS = {
   en: {
@@ -52,7 +53,7 @@ const LandingBottom = forwardRef((props, ref) => {
 
   return (
     <div className='landing-bottom' ref={ref}>
-      <div className="stats-bar">
+      <RevealOnScroll className="stats-bar">
         <div className="stat">
           <div className="stat-num">20+</div>
           <div className="stat-label">{t.kenyanActs}</div>
@@ -67,36 +68,36 @@ const LandingBottom = forwardRef((props, ref) => {
           <div className="stat-num">{t.free}</div>
           <div className="stat-label">{t.accessible}</div>
         </div>
-      </div>
+      </RevealOnScroll>
 
-      <div className="how-section">
+      <RevealOnScroll className="how-section">
         <h2>{t.howItWorks}</h2>
 
         <div className="steps">
-          <div className="step">
+          <RevealOnScroll className="step" delay={80}>
             <div className="step-num">1</div>
             <h3>{t.step1Title}</h3>
             <p>{t.step1Text}</p>
-          </div>
+          </RevealOnScroll>
 
-          <div className="step">
+          <RevealOnScroll className="step" delay={160}>
             <div className="step-num">2</div>
             <h3>{t.step2Title}</h3>
             <p>{t.step2Text}</p>
-          </div>
+          </RevealOnScroll>
 
-          <div className="step">
+          <RevealOnScroll className="step" delay={240}>
             <div className="step-num">3</div>
             <h3>{t.step3Title}</h3>
             <p>{t.step3Text}</p>
-          </div>
+          </RevealOnScroll>
         </div>
-      </div>
+      </RevealOnScroll>
 
-      <div className="footer">
+      <RevealOnScroll className="footer">
         <span>{t.footer1}</span>
         <span>{t.footer2}</span>
-      </div>
+      </RevealOnScroll>
     </div>
   );
 });
