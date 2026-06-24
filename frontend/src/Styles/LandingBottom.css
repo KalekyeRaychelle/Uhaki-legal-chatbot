@@ -16,3 +16,11 @@
 
 .footer { padding: 14px 28px; border-top: 0.5px solid #EEEDFE; background: white; display: flex; align-items: center; justify-content: space-between; font-family: 'DM Sans', sans-serif; }
 .footer span { font-size: 11px; color: #B4B2A9; }
+@media (max-width:768px){
+    .steps{
+       grid-template-columns: 1fr;
+    }
+    .footer{
+      flex-direction: column;  
+    }
+}

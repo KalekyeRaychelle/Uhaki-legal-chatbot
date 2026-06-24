@@ -291,3 +291,18 @@
     font-size: 11px; 
     flex-shrink: 0;
  }
+@media (max-width:768px){
+    .midSection{
+        grid-template-columns: 1fr;
+    }
+    .midLeft{
+        padding: 40px 20px 28px;
+    }
+    .midRight{
+        min-height: 360px;
+        padding: 32px 20px;
+    }
+    .chat-float{
+        width: min(100%, 300px);
+    }
+}
