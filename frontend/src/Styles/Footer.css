@@ -6,3 +6,9 @@
   color: #555;
   border-top: 1px solid #e5e7eb;
 }
+@media (max-width:768px){
+  .footer{
+    font-size: 12px;
+    padding: 15px 10px;
+  }
+}

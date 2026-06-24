@@ -1,54 +1,56 @@
 import React from 'react';
 import { IconScale } from '@tabler/icons-react';
-import '../Styles/LandingHeader.css';
-import { useNavigate, Link } from 'react-router-dom';
+import '../Styles/ActsHeader.css';
 import { useLanguage } from '../Context/LanguageContext';
+import { Link } from 'react-router-dom';
 
 const STRINGS = {
   en: {
     home: 'Home',
-    chat: 'Start Chatting',
+    chat: 'Chat',
   },
   sw: {
     home: 'Nyumbani',
-    chat: 'Anza Mazungumzo',
+    chat: 'Uliza',
   },
 };
 
 const ActsHeader = () => {
-  const navigate = useNavigate();
   const { lang, setLang } = useLanguage();
   const t = STRINGS[lang];
 
-  const handleChatClick = () => {
-    navigate('/ChatPage');
-  };
-
   return (
-    <div className="landingHeader">
-      <div className="rightSide">
-        <div className="logo-box">
+    <div className="acts-header">
+      <div className="acts-brand">
+        <div className="acts-logo">
           <IconScale />
         </div>
-        <span>Uhaki</span>
+        <span className="acts-title">Uhaki</span>
       </div>
 
-      <div className="leftSide">
-        <Link to='/'>{t.home}</Link>
-        <button onClick={handleChatClick} className="chat-btn">
-          {t.chat}
-        </button>
+      <div className="acts-nav">
+        <Link to="/" className="acts-link">
+          {t.home}
+        </Link>
 
-        <div className="language">
+        <Link to="/ChatPage" className="acts-link">
+          {t.chat}
+        </Link>
+
+        <div className="acts-language">
           <button
-            className={`lang-btn1 ${lang === 'en' ? 'lang-active' : ''}`}
+            className={`acts-lang-left ${
+              lang === 'en' ? 'lang-active' : ''
+            }`}
             onClick={() => setLang('en')}
           >
             EN
           </button>
 
           <button
-            className={`lang-btn ${lang === 'sw' ? 'lang-active' : ''}`}
+            className={`acts-lang-right ${
+              lang === 'sw' ? 'lang-active' : ''
+            }`}
             onClick={() => setLang('sw')}
           >
             SW
