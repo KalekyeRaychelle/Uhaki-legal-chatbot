@@ -4,6 +4,8 @@
     display:flex;
     justify-content:space-between;
     background-color: white;
+    position: relative;
+    z-index: 10;
 }
 .rightSide{
     display:flex;
@@ -34,6 +36,24 @@
     align-items:center;
     gap:20px;
     padding: 10px 20px; 
+    position: relative;
+}
+.landing-actions{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+.menu-toggle{
+    display:none;
+    width: 38px;
+    height: 38px;
+    align-items:center;
+    justify-content:center;
+    background: transparent;
+    border: 1px solid #E6E2FF;
+    border-radius: 5px;
+    color: #6C5CE7;
+    cursor: pointer;
 }
 .leftSide span, a,
 .leftSide .nav-link{
@@ -106,4 +126,49 @@
 }
 .lang-btn:hover{
     color: #6C5CE7;
+}
+@media(max-width:768px) {
+    .landingHeader{
+        align-items:center;
+    }
+    .rightSide{
+        padding: 10px 12px;
+    }
+    .leftSide{
+        gap:10px;
+        padding: 10px 12px;
+    }
+    .menu-toggle{
+        display:flex;
+    }
+    .landing-actions{
+        display:none;
+        position:absolute;
+        top:calc(100% + 8px);
+        right:12px;
+        min-width: 190px;
+        flex-direction:column;
+        align-items:stretch;
+        gap:10px;
+        padding:12px;
+        background:#FFFFFF;
+        border:1px solid #E6E2FF;
+        border-radius:8px;
+        box-shadow:0 10px 24px rgba(24, 20, 64, 0.12);
+    }
+    .landing-actions.is-open{
+        display:flex;
+    }
+    .landing-actions .nav-link{
+        text-align:left;
+        padding:8px 4px;
+    }
+    .landing-actions .chat-btn{
+        width:100%;
+        text-align:center;
+        letter-spacing:0;
+    }
+    .language{
+        white-space:nowrap;
+    }
 }
