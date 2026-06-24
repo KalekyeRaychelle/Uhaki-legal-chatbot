@@ -1,9 +1,8 @@
-import React from 'react';
-import { IconScale } from '@tabler/icons-react';
+import React,{useState} from 'react';
+import { IconScale, IconMenu2, IconX } from '@tabler/icons-react';
 import '../Styles/LandingHeader.css';
-import { useNavigate, Link } from 'react-router-dom';
 import { useLanguage } from '../Context/LanguageContext';
-
+import { Link } from 'react-router-dom';
 const STRINGS = {
   en: {
     home: 'Home',
@@ -16,13 +15,9 @@ const STRINGS = {
 };
 
 const ActsHeader = () => {
-  const navigate = useNavigate();
   const { lang, setLang } = useLanguage();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const t = STRINGS[lang];
-
-  const handleChatClick = () => {
-    navigate('/ChatPage');
-  };
 
   return (
     <div className="landingHeader">
@@ -34,26 +29,44 @@ const ActsHeader = () => {
       </div>
 
       <div className="leftSide">
-        <Link to='/'>{t.home}</Link>
-        <button onClick={handleChatClick} className="chat-btn">
-          {t.chat}
+        <button
+                      type="button"
+                      className="menu-toggle"
+                      aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                      aria-expanded={isMenuOpen}
+                      onClick={() => setIsMenuOpen((open) => !open)}
+                    >
+                      <IconMenu2 size={22} />
         </button>
-
-        <div className="language">
-          <button
-            className={`lang-btn1 ${lang === 'en' ? 'lang-active' : ''}`}
-            onClick={() => setLang('en')}
-          >
-            EN
-          </button>
-
-          <button
-            className={`lang-btn ${lang === 'sw' ? 'lang-active' : ''}`}
-            onClick={() => setLang('sw')}
-          >
-            SW
-          </button>
-        </div>
+         <div className={`landing-actions ${isMenuOpen ? 'is-open' : ''}`}>
+                      <button
+                        type="button"
+                        className="menu-close"
+                        aria-label="Close navigation menu"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <IconX size={20} />
+                      </button>
+                      <Link to="/ActsCovered" className="nav-link" onClick={() => setIsMenuOpen(false)}>{t.acts}</Link>
+                      <Link to="/ChatPage" className="nav-link" onClick={() => setIsMenuOpen(false)}>{t.questions}</Link>
+                    </div>
+        <div className='language'>
+            <button
+              className={`lang-btn1 ${lang === 'en' ? 'lang-active' : ''}`}
+              onClick={() => setLang('en')}
+            >
+              EN
+            </button>
+            <button
+              className={`lang-btn ${lang === 'sw' ? 'lang-active' : ''}`}
+              onClick={() => {
+                console.log("SW clicked");
+                setLang('sw');
+              }}
+            >
+              SW
+            </button>
+          </div>
       </div>
     </div>
   );

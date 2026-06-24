@@ -17,7 +17,6 @@ const STRINGS = {
 const LandingHeader = () => {
       const { lang, setLang } = useLanguage();
       const [isMenuOpen, setIsMenuOpen] = useState(false);
-      console.log("Current language:", lang);
       const t = STRINGS[lang];
   return (
     <div className="landingHeader">

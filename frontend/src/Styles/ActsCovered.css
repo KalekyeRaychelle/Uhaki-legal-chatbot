@@ -126,3 +126,11 @@
     font-size: 11px; 
     color: #534AB7; 
 }
+@media (max-width:768px){
+    .constitution-banner{
+        flex-direction: column;
+    }
+    .acts-covered{
+        grid-template-columns: 1fr;
+    }
+}
