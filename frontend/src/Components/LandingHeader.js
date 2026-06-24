@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { IconMenu2, IconScale, IconX } from '@tabler/icons-react';
 import '../Styles/LandingHeader.css';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../Context/LanguageContext';
 const STRINGS = {
   en: {
@@ -15,19 +15,10 @@ const STRINGS = {
 };
 
 const LandingHeader = () => {
-      const navigate = useNavigate();
       const { lang, setLang } = useLanguage();
       const [isMenuOpen, setIsMenuOpen] = useState(false);
       console.log("Current language:", lang);
       const t = STRINGS[lang];
-      const handleChatClick = () => {
-        setIsMenuOpen(false);
-        navigate('/ChatPage');
-      }
-      const onActsCoveredClick=()=>{
-        setIsMenuOpen(false);
-        navigate('/ActsCovered')
-      }
   return (
     <div className="landingHeader">
         <div className='rightSide'>
@@ -42,11 +33,19 @@ const LandingHeader = () => {
               aria-expanded={isMenuOpen}
               onClick={() => setIsMenuOpen((open) => !open)}
             >
-              {isMenuOpen ? <IconX size={22} /> : <IconMenu2 size={22} />}
+              <IconMenu2 size={22} />
             </button>
             <div className={`landing-actions ${isMenuOpen ? 'is-open' : ''}`}>
-              <button type="button" className="nav-link" onClick={onActsCoveredClick}>{t.acts}</button>
-              <button onClick={handleChatClick} className='chat-btn'>{t.questions}</button>
+              <button
+                type="button"
+                className="menu-close"
+                aria-label="Close navigation menu"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <IconX size={20} />
+              </button>
+              <Link to="/ActsCovered" className="nav-link" onClick={() => setIsMenuOpen(false)}>{t.acts}</Link>
+              <Link to="/ChatPage" className="nav-link" onClick={() => setIsMenuOpen(false)}>{t.questions}</Link>
             </div>
              <div className='language'>
             <button
