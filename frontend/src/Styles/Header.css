@@ -145,6 +145,34 @@
 .mobile-menu{
     display:none;
 }
+
+.theme-mobile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: transparent;
+    border: none;
+    color: #6C5CE7;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-mobile svg {
+    transition: fill 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
+    fill: transparent;
+}
+
+.theme-mobile:hover svg {
+    fill: #6C5CE7;
+    transform: scale(1.1);
+}
+
+.theme-mobile svg {
+    width: 20px;
+    height: 20px;
+}
 @media (max-width:768px){
     .header{
         padding: 8px 12px;

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Styles/Header.css';
 import {
   IconScale,
   IconRefresh,
   IconMenu2,
-  IconX
+  IconX,IconMoon, IconSun
 } from '@tabler/icons-react';
 import { useLanguage } from '../Context/LanguageContext';
 import { Link } from 'react-router-dom';
@@ -27,8 +27,19 @@ const STRINGS = {
 const Header = ({ onClearChat }) => {
   const { lang, setLang } = useLanguage();
   const t = STRINGS[lang];
-
+  const [darkMode,setDarkMode]=useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  
+  const toggleTheme=()=>{
+        setDarkMode(!darkMode);
+  }
+  useEffect(() => {
+          if (darkMode) {
+            document.body.classList.add('dark-mode');
+          } else {
+            document.body.classList.remove('dark-mode');
+          }
+  }, [darkMode]);
 
   return (
     <div className='header'>
@@ -82,6 +93,9 @@ const Header = ({ onClearChat }) => {
           <Link to="/ActsCovered" onClick={() => setMenuOpen(false)}>
             {t.acts}
           </Link>
+          <Link className="theme-mobile" onClick={toggleTheme}>
+                        {darkMode ? <IconSun /> : <IconMoon />}
+          </Link>
                 
 
         <div className="mobile-language">
@@ -99,7 +113,9 @@ const Header = ({ onClearChat }) => {
                 SW
               </button>
             </div>
+        
           </div>
+
       </div>
     </div>
   );

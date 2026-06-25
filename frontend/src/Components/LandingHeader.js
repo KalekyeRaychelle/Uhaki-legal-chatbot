@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { IconMenu2, IconScale, IconX } from '@tabler/icons-react';
+import React, { useState, useEffect  } from 'react'
+import { IconMenu2, IconScale, IconX, IconMoon,IconSun } from '@tabler/icons-react';
 import '../Styles/LandingHeader.css';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../Context/LanguageContext';
@@ -17,7 +17,20 @@ const STRINGS = {
 const LandingHeader = () => {
       const { lang, setLang } = useLanguage();
       const [isMenuOpen, setIsMenuOpen] = useState(false);
+      const [darkMode,setDarkMode]=useState(false);
       const t = STRINGS[lang];
+
+      const toggleTheme = () => {
+        setDarkMode(!darkMode);
+        console.log("Dark mode:", !darkMode);
+      };
+      useEffect(() => {
+        if (darkMode) {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      }, [darkMode]);
   return (
     <div className="landingHeader">
         <div className='rightSide'>
@@ -46,6 +59,9 @@ const LandingHeader = () => {
               <Link to="/ActsCovered" className="nav-link" onClick={() => setIsMenuOpen(false)}>{t.acts}</Link>
               <Link to="/ChatPage" className="nav-link" onClick={() => setIsMenuOpen(false)}>{t.questions}</Link>
             </div>
+             <button className="theme-mobile" onClick={toggleTheme}>
+              {darkMode ? <IconSun /> : <IconMoon />}
+            </button>
              <div className='language'>
             <button
               className={`lang-btn1 ${lang === 'en' ? 'lang-active' : ''}`}
@@ -63,9 +79,9 @@ const LandingHeader = () => {
               SW
             </button>
           </div>
+  
+          </div>
         </div>
-        
-    </div>
   )
 }
 

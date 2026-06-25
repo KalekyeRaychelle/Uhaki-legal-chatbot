@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500&display=swap");
 
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
 .landingHeader{
     display:flex;
     justify-content:space-between;
@@ -7,6 +11,7 @@
     position: relative;
     z-index: 10;
 }
+
 .rightSide{
     display:flex;
     align-items:center;
@@ -131,6 +136,33 @@
 }
 .lang-btn:hover{
     color: #6C5CE7;
+}
+.theme-mobile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: transparent;
+    border: none;
+    color: #6C5CE7;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-mobile svg {
+    transition: fill 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
+    fill: transparent;
+}
+
+.theme-mobile:hover svg {
+    fill: #6C5CE7;
+    transform: scale(1.1);
+}
+
+.theme-mobile svg {
+    width: 20px;
+    height: 20px;
 }
 @media(max-width:768px) {
     .landingHeader{

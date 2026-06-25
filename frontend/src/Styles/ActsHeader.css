@@ -55,7 +55,7 @@
 .acts-language {
     display: flex;
     align-items: center;
-    margin-right: 10px;
+
 }
 
 .acts-lang-left,
@@ -79,6 +79,33 @@
     color: #6C5CE7;
 }
 
+.theme-mobile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: transparent;
+    border: none;
+    color: #6C5CE7;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-mobile svg {
+    transition: fill 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
+    fill: transparent;
+}
+
+.theme-mobile:hover svg {
+    fill: #6C5CE7;
+    transform: scale(1.1);
+}
+
+.theme-mobile svg {
+    width: 20px;
+    height: 20px;
+}
 @media (max-width: 768px) {
     .acts-header {
         padding: 10px 12px;
