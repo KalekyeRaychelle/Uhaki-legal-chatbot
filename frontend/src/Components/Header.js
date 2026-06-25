@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Styles/Header.css';
 import {
   IconScale,
@@ -33,6 +33,13 @@ const Header = ({ onClearChat }) => {
   const toggleTheme=()=>{
         setDarkMode(!darkMode);
   }
+  useEffect(() => {
+          if (darkMode) {
+            document.body.classList.add('dark-mode');
+          } else {
+            document.body.classList.remove('dark-mode');
+          }
+  }, [darkMode]);
 
   return (
     <div className='header'>
