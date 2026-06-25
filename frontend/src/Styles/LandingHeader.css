@@ -4,6 +4,9 @@ body.dark-mode {
   background-color: #121212;
   color: white;
 }
+body.dark-mode .landingHeader{
+    background-color: #5341d6;
+}
 .landingHeader{
     display:flex;
     justify-content:space-between;
