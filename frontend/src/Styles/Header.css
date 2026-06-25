@@ -173,6 +173,13 @@
     width: 20px;
     height: 20px;
 }
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+body.dark-mode .landingHeader{
+    background-color: #5341d6;
+}
 @media (max-width:768px){
     .header{
         padding: 8px 12px;
