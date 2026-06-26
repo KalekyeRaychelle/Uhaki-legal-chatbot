@@ -67,3 +67,33 @@
 .floatCircle button:hover:not{
     background: #EEEDFE;
 }
+
+body.dark-mode .search-bar {
+  background: #0F1B2D;
+  border-bottom-color: #2A3F57;
+}
+
+body.dark-mode .search-toggle {
+  background: #162236;
+  border-color: #2A3F57;
+}
+body.dark-mode .search-toggle input {
+  color: #E8EEFF;
+}
+body.dark-mode .search-toggle input::placeholder {
+  color: #4A6480;
+}
+body.dark-mode .search-toggle button { color: #4A6480; }
+body.dark-mode .search-toggle button:hover { color: #A99FF5; }
+
+body.dark-mode .floatCircle button {
+  background: #162236;
+  border-color: #2A3F57;
+  color: #8FA3BF;
+}
+body.dark-mode .floatCircle button:hover,
+body.dark-mode .floatCircle button.active {
+  background: #6C5CE7;
+  border-color: #6C5CE7;
+  color: white;
+}

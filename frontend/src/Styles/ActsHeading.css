@@ -21,3 +21,12 @@
     line-height: 1.6;
     max-width: 520px; 
 }
+
+body.dark-mode .ActsHeading {
+  background: #0F1B2D;
+  border-top-color: #2A3F57;
+  border-bottom-color: #2A3F57;
+}
+
+body.dark-mode .ActsHeading h1 { color: #E8EEFF; }
+body.dark-mode .ActsHeading p  { color: #8FA3BF; }
