@@ -1,12 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500&display=swap");
 
-body.dark-mode {
-  background-color: #121212;
-  color: white;
-}
-body.dark-mode .landingHeader{
-    background-color: #5341d6;
-}
+
 .landingHeader{
     display:flex;
     justify-content:space-between;
@@ -236,4 +230,47 @@ body.dark-mode .landingHeader{
     .language{
         white-space:nowrap;
     }
+    
+    body.dark-mode .landing-actions {
+    background: #1E2F45;
+    border-color: #2A3F57;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    body.dark-mode .menu-close {
+    color: #8FA3BF;
+    }
+
+    body.dark-mode .logo-box {
+    box-shadow: 0 0 10px rgba(108, 92, 231, 0.35);
+    }
+}
+body.dark-mode {
+  background-color: #0F1B2D;
+  color: #E8EEFF;
+}
+
+body.dark-mode .landingHeader {
+  background-color: #162236;
+  border-bottom: 1px solid #2A3F57;
+}
+
+body.dark-mode .leftSide span,
+body.dark-mode .leftSide a,
+body.dark-mode .leftSide .nav-link {
+  color: #E8EEFF;
+}
+
+body.dark-mode .leftSide a:hover,
+body.dark-mode .leftSide .nav-link:hover {
+   color: #8FA3BF;
+}
+
+body.dark-mode .lang-btn,
+body.dark-mode .lang-btn1 {
+  color: #8FA3BF;
+}
+
+body.dark-mode .lang-btn1 {
+  border-right-color: #2A3F57;
 }
