@@ -42,69 +42,43 @@ const Header = ({ onClearChat }) => {
         </div>
       </div>
 
-      <div className='chatRight'>
-        <Link to='/'>{t.home}</Link>
+     <div className='chatRight'>
+  <Link to='/'>{t.home}</Link>
+  <Link to='/ActsCovered'>{t.acts}</Link>
 
-        <Link to='/ActsCovered'>{t.acts}</Link>
+  <button onClick={onClearChat} className='clear-btn'>
+    <IconRefresh size={16} /> {t.clear}
+  </button>
 
-        <button onClick={onClearChat} className='clear-btn'>
-          <IconRefresh size={16} /> {t.clear}
-        </button>
+  {/* Add theme toggle here for desktop */}
+  <button className="theme-mobile" onClick={toggleTheme}>
+    {darkMode ? <IconSun /> : <IconMoon />}
+  </button>
 
-        <div className='language'>
-          <button
-            className={`lang-btn1 ${lang === 'en' ? 'lang-active' : ''}`}
-            onClick={() => setLang('en')}
-          >
-            EN
-          </button>
+  <div className='language'>
+    <button
+      className={`lang-btn1 ${lang === 'en' ? 'lang-active' : ''}`}
+      onClick={() => setLang('en')}
+    >EN</button>
+    <button
+      className={`lang-btn ${lang === 'sw' ? 'lang-active' : ''}`}
+      onClick={() => setLang('sw')}
+    >SW</button>
+  </div>
 
-          <button
-            className={`lang-btn ${lang === 'sw' ? 'lang-active' : ''}`}
-            onClick={() => setLang('sw')}
-          >
-            SW
-          </button>
-        </div>
+  <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
+    {menuOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
+  </button>
 
-        <button
-          className="menu-btn"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
-        </button>
-        <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
-          <Link to="/" onClick={() => setMenuOpen(false)}>
-            {t.home}
-          </Link>
-
-          <Link to="/ActsCovered" onClick={() => setMenuOpen(false)}>
-            {t.acts}
-          </Link>
-          <Link className="theme-mobile" onClick={toggleTheme}>
-                        {darkMode ? <IconSun /> : <IconMoon />}
-          </Link>
-                
-
-        <div className="mobile-language">
-              <button
-                className={lang === 'en' ? 'lang-active' : ''}
-                onClick={() => setLang('en')}
-              >
-                EN
-              </button>
-
-              <button
-                className={lang === 'sw' ? 'lang-active' : ''}
-                onClick={() => setLang('sw')}
-              >
-                SW
-              </button>
-            </div>
-        
-          </div>
-
-      </div>
+  <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+    <Link to="/" onClick={() => setMenuOpen(false)}>{t.home}</Link>
+    <Link to="/ActsCovered" onClick={() => setMenuOpen(false)}>{t.acts}</Link>
+    <div className="mobile-language">
+      <button className={lang === 'en' ? 'lang-active' : ''} onClick={() => setLang('en')}>EN</button>
+      <button className={lang === 'sw' ? 'lang-active' : ''} onClick={() => setLang('sw')}>SW</button>
+    </div>
+  </div>
+</div>
     </div>
   );
 };
