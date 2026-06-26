@@ -310,3 +310,29 @@ body.dark-mode .landingHeader{
     }
 }
 
+body.dark-mode .header {
+  background-color: #162236;
+  border-bottom: 1px solid #2A3F57;
+}
+
+body.dark-mode .titleGroup span { color: #E8EEFF; }
+
+body.dark-mode .chatRight a  { color: #8FA3BF; }
+body.dark-mode .chatRight a:hover { color: #E8EEFF; }
+
+body.dark-mode .lang-btn,
+body.dark-mode .lang-btn1 { color: #8FA3BF; }
+body.dark-mode .lang-btn1  { border-right-color: #2A3F57; }
+
+body.dark-mode .mobile-menu {
+  background: #1E2F45;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+body.dark-mode .mobile-menu a {
+  color: #8FA3BF;
+  border-bottom-color: #2A3F57;
+}
+body.dark-mode .mobile-menu a:hover { color: #E8EEFF; }
+
+body.dark-mode .mobile-language button { color: #8FA3BF; }
+body.dark-mode .mobile-language button.lang-active { color: #A99FF5; }

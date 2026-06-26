@@ -12,3 +12,9 @@
     padding: 15px 10px;
   }
 }
+
+body.dark-mode .footer {
+  background-color: #0F1B2D;
+  color: #4A6480;
+  border-top-color: #2A3F57;
+}

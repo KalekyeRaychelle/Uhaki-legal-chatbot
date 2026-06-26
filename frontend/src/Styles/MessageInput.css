@@ -73,3 +73,14 @@
     height: 44px;
   }
 }
+
+body.dark-mode .composer {
+  background: #162236;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .composer-input { color: #E8EEFF; }
+body.dark-mode .composer-input::placeholder {
+  color: #E8EEFF;
+  opacity: 0.3;
+}

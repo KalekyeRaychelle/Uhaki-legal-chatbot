@@ -9,3 +9,6 @@
 .disclaimer p {
   margin: 0;
 }
+body.dark-mode .disclaimer{
+  color:#8FA3BF;
+}
