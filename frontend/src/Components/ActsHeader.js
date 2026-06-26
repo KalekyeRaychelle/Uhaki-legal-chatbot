@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 import { IconScale,IconMoon,IconSun } from '@tabler/icons-react';
 import '../Styles/ActsHeader.css';
 import { useLanguage } from '../Context/LanguageContext';
@@ -16,19 +16,9 @@ const STRINGS = {
 };
 
 const ActsHeader = () => {
-  const { lang, setLang } = useLanguage();
+  const { lang, setLang, darkMode, toggleTheme } = useLanguage();
   const t = STRINGS[lang];
-  const [darkMode,setDarkMode]=useState(false);
-  const toggleTheme=()=>{
-        setDarkMode(!darkMode);
-  }
-  useEffect(() => {
-          if (darkMode) {
-            document.body.classList.add('dark-mode');
-          } else {
-            document.body.classList.remove('dark-mode');
-          }
-  }, [darkMode]);
+
 
   return (
     <div className="acts-header">
