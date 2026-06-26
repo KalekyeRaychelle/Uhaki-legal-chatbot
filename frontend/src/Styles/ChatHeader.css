@@ -14,3 +14,7 @@
   color: #18a011;
 }
 
+body.dark-mode .chatHeader {
+  background-color: #162236;
+  border-bottom-color: #2A3F57;
+}

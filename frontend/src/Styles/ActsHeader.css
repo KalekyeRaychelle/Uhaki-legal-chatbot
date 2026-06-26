@@ -146,3 +146,27 @@
         padding: 3px;
     }
 }
+
+body.dark-mode .acts-header {
+  background-color: #162236;
+  border-bottom: 1px solid #2A3F57;
+}
+
+body.dark-mode .acts-link {
+    color: #E8EEFF;
+}
+body.dark-mode .acts-link:hover {
+   color: #8FA3BF;
+}
+
+body.dark-mode .acts-lang-left,
+body.dark-mode .acts-lang-right {
+  color: #8FA3BF;
+}
+body.dark-mode .acts-lang-left {
+  border-right-color: #2A3F57;
+}
+
+body.dark-mode .acts-logo {
+  box-shadow: 0 0 10px rgba(108, 92, 231, 0.35);
+}

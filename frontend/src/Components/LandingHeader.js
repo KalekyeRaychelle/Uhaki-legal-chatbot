@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react'
+import React, { useState} from 'react'
 import { IconMenu2, IconScale, IconX, IconMoon,IconSun } from '@tabler/icons-react';
 import '../Styles/LandingHeader.css';
 import { Link } from 'react-router-dom';
@@ -15,22 +15,12 @@ const STRINGS = {
 };
 
 const LandingHeader = () => {
-      const { lang, setLang } = useLanguage();
+      
       const [isMenuOpen, setIsMenuOpen] = useState(false);
-      const [darkMode,setDarkMode]=useState(false);
+      const { lang, setLang, darkMode, toggleTheme } = useLanguage();
       const t = STRINGS[lang];
 
-      const toggleTheme = () => {
-        setDarkMode(!darkMode);
-        console.log("Dark mode:", !darkMode);
-      };
-      useEffect(() => {
-        if (darkMode) {
-          document.body.classList.add('dark-mode');
-        } else {
-          document.body.classList.remove('dark-mode');
-        }
-      }, [darkMode]);
+      
   return (
     <div className="landingHeader">
         <div className='rightSide'>

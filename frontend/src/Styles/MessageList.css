@@ -351,3 +351,56 @@
     padding: 8px 12px;
   }
 }
+
+body.dark-mode .message-list-container {
+  background: #0F1B2D;
+}
+
+body.dark-mode .bubble.uhaki {
+  background: #162236;
+  color: #E8EEFF;
+}
+
+body.dark-mode .prompt-chip,
+body.dark-mode .source-chip {
+  background: #162236;
+  border-color: #2A3F57;
+  color: #A99FF5;
+}
+body.dark-mode .prompt-chip:hover,
+body.dark-mode .source-chip:hover {
+  background: #1E2F45;
+  border-color: #6C5CE7;
+}
+
+body.dark-mode .copy-btn,
+body.dark-mode .sources-link {
+  color: #A99FF5;
+}
+body.dark-mode .copy-btn:hover,
+body.dark-mode .sources-link:hover {
+  color: #E8EEFF;
+}
+
+body.dark-mode .bubble.typing-bubble {
+  background: #162236;
+}
+
+
+body.dark-mode .sources-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+body.dark-mode .sources-modal {
+  background: #162236;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+body.dark-mode .sources-modal h3 { color: #A99FF5; }
+body.dark-mode .sources-modal li { color: #8FA3BF; }
+body.dark-mode .source-title      { color: #A99FF5; }
+body.dark-mode .modal-close {
+  background: rgba(108, 92, 231, 0.15);
+  color: #A99FF5;
+}
+body.dark-mode .modal-close:hover {
+  background: rgba(108, 92, 231, 0.3);
+}

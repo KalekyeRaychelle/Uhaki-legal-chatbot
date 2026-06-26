@@ -98,6 +98,7 @@
     margin-bottom:10px;
     font-family: 'DM Sans', sans-serif;
 }
+
 .convoSide .text-link{
     background: transparent;
     border: 0;
@@ -305,4 +306,58 @@
     .chat-float{
         width: min(100%, 300px);
     }
+}
+body.dark-mode .midLeft{
+    background: #110F2A;
+}
+body.dark-mode .midLeft h1 { color: #E8EEFF; }
+body.dark-mode .midLeft p  { color: #8FA3BF; }
+
+body.dark-mode .floating-badge {
+  background-color: #1E2F45;
+  color: #8FA3BF;
+}
+
+body.dark-mode .convoSide .text-link { color: #A99FF5; }
+
+body.dark-mode .floatBoats span {
+  background-color: #1E2F45;
+  border-color: #2A3F57;
+  color: #8FA3BF;
+}
+body.dark-mode .floatBoats span:hover { background-color: #162236; }
+
+
+body.dark-mode .midRight { background: #162236; }
+body.dark-mode .outline  { opacity: 0.2; }
+
+
+body.dark-mode .chat-float {
+  background: #1E2F45;
+  border-color: #2A3F57;
+}
+body.dark-mode .chat-float-input {
+  border-top-color: #2A3F57;
+}
+body.dark-mode .chat-float-input span { color: #4A6480; }
+
+body.dark-mode .cmsg.bot .cbubble {
+  background: #0F1B2D;
+  border-color: #2A3F57;
+  color: #C4D4E8;
+}
+body.dark-mode .typing {
+  background: #0F1B2D;
+  border-color: #2A3F57;
+}
+
+
+body.dark-mode .spill {
+  background: #162236;
+  color: #8FA3BF;
+}
+
+body.dark-mode #inputPreview[style*="color: rgb(60, 52, 137)"],
+body.dark-mode #inputPreview { 
+  color: #4A6480; 
 }

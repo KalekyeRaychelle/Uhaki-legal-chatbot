@@ -24,3 +24,31 @@
       flex-direction: column;  
     }
 }
+
+body.dark-mode .stats-bar {
+  background: #0F1B2D;
+  border-top-color: #2A3F57;
+}
+body.dark-mode .stat {
+  border-right-color: #2A3F57;
+}
+body.dark-mode .stat-label { color: #4A6480; }
+
+body.dark-mode .how-section {
+  background: #0F1B2D;
+  border-top-color: #2A3F57;
+}
+body.dark-mode .how-section h2 { color: #E8EEFF; }
+
+body.dark-mode .step {
+  background: #162236;
+  border-color: #2A3F57;
+}
+body.dark-mode .step h3 { color: #A99FF5; }
+body.dark-mode .step p  { color: #8FA3BF; }
+
+body.dark-mode .footer {
+  background: #0F1B2D;
+  border-top-color: #2A3F57;
+}
+body.dark-mode .footer span { color: #4A6480; }

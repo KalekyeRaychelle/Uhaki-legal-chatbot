@@ -134,3 +134,29 @@
         grid-template-columns: 1fr;
     }
 }
+
+body.dark-mode .constitution-banner .badge {
+  background: #0F1B2D;
+  color: #A99FF5;
+}
+
+body.dark-mode .act-card {
+  background: #162236;
+  border-color: #2A3F57;
+}
+body.dark-mode .act-card:hover { border-color: #6C5CE7; }
+
+body.dark-mode .act-name { color: #A99FF5; }
+body.dark-mode .act-desc { color: #8FA3BF; }
+
+body.dark-mode .act-tag {
+  background: #0F1B2D;
+  border-color: #2A3F57;
+  color: #8FA3BF;
+}
+body.dark-mode .act-icon.purple { background: #1E1A3F; color: #A99FF5; }
+body.dark-mode .act-icon.teal   { background: #0E2520; color: #4CC9A0; }
+body.dark-mode .act-icon.coral  { background: #2A1510; color: #E8856A; }
+body.dark-mode .act-icon.blue   { background: #0E2035; color: #6EB3F0; }
+body.dark-mode .act-icon.amber  { background: #251A08; color: #E8A84A; }
+body.dark-mode .act-icon.pink   { background: #25101A; color: #E87AAA; }

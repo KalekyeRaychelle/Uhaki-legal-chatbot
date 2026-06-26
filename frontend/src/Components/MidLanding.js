@@ -102,7 +102,8 @@ const MidLanding = () => {
     function typeInput(text, cb) {
       const el = document.getElementById('inputPreview');
       if (!el) return;
-      el.style.color = '#3C3489';
+      const isDark = document.body.classList.contains('dark-mode');
+      el.style.color = isDark ? '#A99FF5' : '#3C3489';
       let i = 0; el.textContent = '';
       const iv = setInterval(() => {
         el.textContent += text[i]; i++;
