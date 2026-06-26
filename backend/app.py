@@ -16,7 +16,7 @@ from deep_translator import GoogleTranslator
 # ============================
 from dotenv import load_dotenv
 load_dotenv()
-CHROMA_PATH     = os.getenv("CHROMA_PATH", "../data/scripts/chroma")
+CHROMA_PATH     = os.getenv("CHROMA_PATH", "./data/scripts/chroma")
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "actSectionsV2")
 EMBED_MODEL     = os.getenv("HF_EMBED_MODEL", "intfloat/e5-base-v2")
 
