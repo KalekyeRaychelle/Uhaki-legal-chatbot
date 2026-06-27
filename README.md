@@ -38,7 +38,6 @@ Kenyan statutes are lengthy, updated frequently, and distributed as PDFs that ar
 | Data preparation | Python, pandas, regex, custom scripts (`actPreprocessing.py`, `splitChunks.py`) | Handles PDF to JSON/CSV parsing, cleaning, and chunking. |
 | Vector store | [ChromaDB](https://docs.trychroma.com/), `intfloat/e5-base-v2` embeddings | Persistent client living under `data/scripts/chroma` (configurable via `CHROMA_PATH`). |
 | Retrieval & API | Flask, Flask-CORS, SentenceTransformers, pandas, rotating log handlers | `/askQuery` returns ranked sections and optional LLM answers; reranking uses `cross-encoder/ms-marco-MiniLM-L-6-v2`. |
-| Generator| Hugging Face Inference API or notebook tunnel | When `GENERATOR_URL` is set, backend proxies to the remote LLM with retrieved context. |
 | Frontend | React 19, React Router, React Markdown, plain CSS modules | Chat UI, landing page, responsive layout, clipboard helpers, modal for sources. |
 | Evaluation | Jupyter, NumPy/pandas, custom notebooks (`EVALUATION.ipynb`, `backendProcess.ipynb`) | Aggregates retrieval precision/recall, QA accuracy, and NLI-style agreement plots (`testing/evaluationPlots/`). |
 
@@ -124,8 +123,6 @@ During development, the app issues `fetch('http://localhost:5000/askQuery', ...)
 | `TOP_K_RETRIEVE` / `TOP_K_RETURN` | `12 / 5` | How many results to fetch from Chroma vs. return to the caller. |
 | `CSV_LOG` | `../outputs/queryLog.csv` | Where per-query audit rows are appended. |
 | `GENERATOR_URL` | empty | Remote notebook or HF endpoint that receives proxy requests. |
-| `NOTEBOOK_API_KEY` | empty | Shared secret sent as `X-API-Key` when proxying. |
-| `HF_ENDPOINT_URL`, `HF_MODEL_ID`, `HF_TOKEN`, `HF_TEMPERATURE`, `HF_MAX_NEW_TOKENS`, `HF_TIMEOUT_S` | n/a | Used by generator notebooks or other downstream services. Do **not** commit live credentials. |
 | `CE_*` (see `backend/reranker.py`) | n/a | Control local cross-encoder (paths, batch sizes, fusion weight). |
 | `frontend/.env: PORT` | `4700` | Overrides CRA dev server port (default CRA is 3000 if unset). |
 
