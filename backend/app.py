@@ -77,6 +77,7 @@ logging.info(f"[INIT] Embedder ready: {EMBED_MODEL}")
 
 chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
 collection = chroma_client.get_collection(name=COLLECTION_NAME)
+print("Collection metadata:", collection.metadata)
 logging.info(f"[INIT] Chroma collection loaded: {COLLECTION_NAME} @ {CHROMA_PATH}")
 
 # ============================
