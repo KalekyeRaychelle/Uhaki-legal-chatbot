@@ -10,7 +10,7 @@ BATCH_SIZE = int(os.getenv("CE_BATCH_SIZE", "32"))
 MAX_CHARS  = int(os.getenv("CE_MAX_CHARS", "1200"))
 HEAD_CHARS = int(os.getenv("CE_HEAD_CHARS", "900"))
 TAIL_CHARS = int(os.getenv("CE_TAIL_CHARS", "300"))
-ALPHA      = float(os.getenv("CE_FUSION_ALPHA", "0.7"))
+ALPHA      = float(os.getenv("CE_FUSION_ALPHA", "0.8"))
 
 _device = "cuda" if torch.cuda.is_available() else "cpu"
 try:
