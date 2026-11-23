@@ -77,6 +77,7 @@ logging.info(f"[INIT] Embedder ready: {EMBED_MODEL}")
 
 chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
 collection = chroma_client.get_collection(name=COLLECTION_NAME)
+print("Collection metadata:", collection.metadata)
 logging.info(f"[INIT] Chroma collection loaded: {COLLECTION_NAME} @ {CHROMA_PATH}")
 
 # ============================
@@ -167,7 +168,7 @@ def retrieve_dense(query: str, act: Optional[str], top_k: int) -> Tuple[List[Dic
     out = []
     for i in range(len(docs)):
         dist = dists[i] if i < len(dists) else None
-        sim = (1.0 - dist) if (dist is not None) else None
+        sim =  -dist if (dist is not None) else None
         md  = metas[i] if i < len(metas) else {}
         row = {
             "id": ids[i] if i < len(ids) else None,
@@ -273,7 +274,7 @@ def generate_with_groq(query: str, context: str) -> str:
     ANSWER:
     """
     response = groq_client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         messages=[
             {"role": "user", "content": prompt}
         ],
