@@ -274,7 +274,7 @@ def generate_with_groq(query: str, context: str) -> str:
     ANSWER:
     """
     response = groq_client.chat.completions.create(
-        model="openai/gpt-oss-120b",
+        model="qwen/qwen3.8-27b",
         messages=[
             {"role": "user", "content": prompt}
         ],
